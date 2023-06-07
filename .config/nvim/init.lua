@@ -109,7 +109,9 @@ require('lazy').setup({
 
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
-
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-nvim-lsp',
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
     },
@@ -214,7 +216,6 @@ require('lazy').setup({
     {'romgrk/barbar.nvim',
     dependencies = {
       'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
     },
     init = function() vim.g.barbar_auto_setup = false end,
     opts = {
@@ -228,7 +229,7 @@ require('lazy').setup({
     -- Use the default values: {event = 'BufWinLeave', text = nil}
     -- NvimTree = true,
     -- Or, specify the text used for the offset:
-    -- undotree = {text = 'undotree'},
+     undotree = {text = 'undotree'},
     -- Or, specify the event which the sidebar executes when leaving:
     -- ['neo-tree'] = {event = 'BufWipeout'},
     -- Or, specify both
@@ -282,11 +283,8 @@ require('lazy').setup({
 	end,
 },
   -- sidebar
-{
-        "nvim-tree/nvim-tree.lua",
-        after = "nvim-web-devicons",
-        requires = "nvim-tree/nvim-web-devicons",
-    },
+{ "nvim-tree/nvim-web-devicons" },
+{"nvim-tree/nvim-tree.lua"},
   -- undo tree
   {'mbbill/undotree'},
   -- auto close tag
@@ -297,7 +295,6 @@ require('lazy').setup({
   --trouble shooting
   {
  "folke/trouble.nvim",
- dependencies = { "nvim-tree/nvim-web-devicons" },
  opts = {
     position = "bottom", -- position of the list can be: bottom, top, left, right
     height = 10, -- height of the trouble list when position is top or bottom
@@ -480,7 +477,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim',  'javascript',  'html'},
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim',  'html'},
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -650,7 +647,8 @@ luasnip.config.setup {}
 --react snipset
 require('luasnip').filetype_extend("javascript", { "javascriptreact" })
 
-require('luasnip').filetype_extend("javascript", { "html" })
+--require('luasnip').filetype_extend("javascript", { "html" })
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -660,8 +658,8 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    -- ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
@@ -688,15 +686,24 @@ cmp.setup {
   },
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' }, 
+    { name = 'luasnip' },
     {
       name = 'path',
       option = {
         -- Options go into this table
       },
-    },
-  },
 
+    },
+    {
+      name = 'buffer',
+      option = {
+	keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%([\-.]\w*\)*\)]],
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end
+      }
+    }
+  },
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
@@ -864,7 +871,6 @@ require'nvim-web-devicons'.setup {
  };
 }
 
-vim.g.neoformat_try_node_exe = 1
 -- trouble
 vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
   {silent = true, noremap = true}
@@ -887,4 +893,3 @@ vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used
-

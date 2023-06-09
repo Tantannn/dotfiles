@@ -239,52 +239,52 @@ require('lazy').setup({
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
   -- emmet
-'mattn/emmet-vim',
-{
-	"Pocco81/auto-save.nvim",
-	config = function()
-		 require("auto-save").setup {
-			-- your config goes here
-			-- or just leave it empty :)
-    enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
-    execution_message = {
-		message = function() -- message to print on save
-			return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
-		end,
-		dim = 0.18, -- dim the color of `message`
-		cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
+  'mattn/emmet-vim',
+  {
+    "Pocco81/auto-save.nvim",
+    config = function()
+      require("auto-save").setup {
+	-- your config goes here
+	-- or just leave it empty :)
+	enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
+	execution_message = {
+	  message = function() -- message to print on save
+	    return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+	  end,
+	  dim = 0.18, -- dim the color of `message`
+	  cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
 	},
-    trigger_events = {"InsertLeave", "TextChanged"}, -- vim events that trigger auto-save. See :h events
+	trigger_events = {"InsertLeave", "TextChanged"}, -- vim events that trigger auto-save. See :h events
 	-- function that determines whether to save the current buffer or not
 	-- return true: if buffer is ok to be saved
 	-- return false: if it's not ok to be saved
 	condition = function(buf)
-		local fn = vim.fn
-		local utils = require("auto-save.utils.data")
+	  local fn = vim.fn
+	  local utils = require("auto-save.utils.data")
 
-		if
-			fn.getbufvar(buf, "&modifiable") == 1 and
-			utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
-			return true -- met condition(s), can save
-		end
-		return false -- can't save
+	  if
+	    fn.getbufvar(buf, "&modifiable") == 1 and
+	    utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+	    return true -- met condition(s), can save
+	  end
+	  return false -- can't save
 	end,
-    write_all_buffers = true, -- write all buffers when the current one meets `condition`
-    debounce_delay = 135, -- saves the file at most every `debounce_delay` milliseconds
+	write_all_buffers = true, -- write all buffers when the current one meets `condition`
+	debounce_delay = 135, -- saves the file at most every `debounce_delay` milliseconds
 	callbacks = { -- functions to be executed at different intervals
-		enabling = nil, -- ran when enabling auto-save
-		disabling = nil, -- ran when disabling auto-save
-		before_asserting_save = nil, -- ran before checking `condition`
-		before_saving = nil, -- ran before doing the actual save
-		after_saving = nil -- ran after doing the actual save
+	  enabling = nil, -- ran when enabling auto-save
+	  disabling = nil, -- ran when disabling auto-save
+	  before_asserting_save = nil, -- ran before checking `condition`
+	  before_saving = nil, -- ran before doing the actual save
+	  after_saving = nil -- ran after doing the actual save
 	}
 
-		 }
-	end,
-},
+      }
+    end,
+  },
   -- sidebar
-{ "nvim-tree/nvim-web-devicons" },
-{"nvim-tree/nvim-tree.lua"},
+  { "nvim-tree/nvim-web-devicons" },
+  {"nvim-tree/nvim-tree.lua"},
   -- undo tree
   {'mbbill/undotree'},
   -- auto close tag
@@ -345,6 +345,10 @@ require('lazy').setup({
     use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
 },
 },
+  --auto import
+  {'neovim/nvim-lspconfig'},
+{'jose-elias-alvarez/null-ls.nvim'},
+ {'MunifTanjim/eslint.nvim'},
 { import = 'custom.plugins' },
 
 }, {})
@@ -536,7 +540,7 @@ require('nvim-treesitter.configs').setup {
         ['<leader>A'] = '@parameter.inner',
       },
     },
-  }, 
+  },
   autotag = {
     enable = true,
   }
@@ -603,7 +607,9 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
+  tsserver = {
+
+  },
 
   lua_ls = {
     Lua = {
@@ -691,6 +697,8 @@ cmp.setup {
       name = 'path',
       option = {
         -- Options go into this table
+        trailing_slash= true,
+        label_trailing_slash= true
       },
 
     },
@@ -890,6 +898,30 @@ vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
 vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
   {silent = true, noremap = true}
 )
+local null_ls = require("null-ls")
+local eslint = require("eslint")
+
+null_ls.setup()
+
+eslint.setup({
+  bin = 'eslint', -- or `eslint_d`
+  code_actions = {
+    enable = true,
+    apply_on_save = {
+      enable = true,
+      types = { "directive", "problem", "suggestion", "layout" },
+    },
+    disable_rule_comment = {
+      enable = true,
+      location = "separate_line", -- or `same_line`
+    },
+  },
+  diagnostics = {
+    enable = true,
+    report_unused_disable_directives = false,
+    run_on = "type", -- or `save`
+  },
+})
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used

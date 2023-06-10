@@ -1,8 +1,8 @@
-# dotfile
+# dotfile for Neovim
 
-Install
+Install 
 -------
-
+Install Neovim
 Clone onto laptop:
 
     git clone git://github.com/cpow/dotfiles.git
@@ -10,3 +10,4 @@ Clone onto laptop:
 use:
 - Telescope keymaps
 - Telescope help_tags
+to search for keywords

@@ -347,9 +347,12 @@ require('lazy').setup({
 },
   --auto import
   {'neovim/nvim-lspconfig'},
-{'jose-elias-alvarez/null-ls.nvim'},
- {'MunifTanjim/eslint.nvim'},
-{ import = 'custom.plugins' },
+  {'jose-elias-alvarez/null-ls.nvim'},
+  {'MunifTanjim/eslint.nvim'},
+  --Search
+  -- {'junegunn/fzf.vim'}
+
+  { import = 'custom.plugins' },
 
 }, {})
 
@@ -476,6 +479,7 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sa', require('telescope.builtin').live_grep, { desc = '[S]earch in [A]ll files' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -810,7 +814,7 @@ vim.keymap.set("n", "<A-b>", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<A-e>", vim.cmd.NvimTreeFocus)
 
 -- keymap for undotree
-vim.keymap.set('n', '<leader><F5>', vim.cmd.UndotreeToggle, { desc = 'ToggleUndoTree' })
+vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = 'ToggleUndoTree' })
 
 --auto pair 
 require('nvim-autopairs').setup({

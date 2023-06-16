@@ -351,6 +351,8 @@ require('lazy').setup({
   {'MunifTanjim/eslint.nvim'},
   --Search
   -- {'junegunn/fzf.vim'}
+  --tailwindcss
+  {'sublimelsp/LSP-tailwindcss'},
 
   { import = 'custom.plugins' },
 

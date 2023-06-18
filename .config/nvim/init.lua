@@ -353,6 +353,8 @@ require('lazy').setup({
   -- {'junegunn/fzf.vim'}
   --tailwindcss
   {'sublimelsp/LSP-tailwindcss'},
+  --vim surround 
+  {'tpope/vim-surround'},
 
   { import = 'custom.plugins' },
 

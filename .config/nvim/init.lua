@@ -363,11 +363,11 @@ require('lazy').setup({
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
- 
+
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
@@ -406,7 +406,7 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
@@ -829,17 +829,16 @@ vim.opt.list = true
 
 require("indent_blankline").setup {
     space_char_blankline = " ",
-    show_end_of_line = true,
     show_current_context = true,
     show_current_context_start = true,
-    char_highlight_list = {
-        "IndentBlanklineIndent1",
-        "IndentBlanklineIndent2",
-        "IndentBlanklineIndent3",
-        "IndentBlanklineIndent4",
-        "IndentBlanklineIndent5",
-        "IndentBlanklineIndent6",
-    },
+    -- char_highlight_list = {
+    --     "IndentBlanklineIndent1",
+    --     "IndentBlanklineIndent2",
+    --     "IndentBlanklineIndent3",
+    --     "IndentBlanklineIndent4",
+    --     "IndentBlanklineIndent5",
+    --     "IndentBlanklineIndent6",
+    -- },
 }
 --icon
 require'nvim-web-devicons'.setup {

@@ -5,7 +5,7 @@ Install
 Install Neovim
 Clone onto laptop:
 
-    git clone git://github.com/cpow/dotfiles.git
+    https://github.com/Tantannn/dotfiles.git
    
 use:
 - Telescope keymaps

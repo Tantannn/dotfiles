@@ -931,8 +931,9 @@ eslint.setup({
 })
 --transparent
 vim.cmd('hi Normal guibg=NONE ctermbg=NONE')
-vim.cmd[[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]
 vim.cmd('hi EndOfBuffer guibg=NONE ctermbg=NONE')
+vim.cmd('hi NvimTreeEndOfBuffer guibg=NONE ctermbg=NONE')
+vim.cmd[[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]
 
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)

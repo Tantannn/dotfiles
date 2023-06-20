@@ -929,6 +929,9 @@ eslint.setup({
     run_on = "type", -- or `save`
   },
 })
+--transparent
+vim.cmd('hi Normal guibg=NONE ctermbg=NONE')
+vim.cmd[[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used

@@ -167,10 +167,10 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    -- opts = {
+    --   char = '┊',
+    --   show_trailing_blankline_indent = false,
+    -- },
   },
 
   -- "gc" to comment visual regions/lines
@@ -357,7 +357,6 @@ require('lazy').setup({
   {'tpope/vim-surround'},
 
   { import = 'custom.plugins' },
-
 }, {})
 
 -- [[ Setting options ]]
@@ -937,4 +936,4 @@ vim.cmd[[hi nvimtreenormal guibg=none ctermbg=none]]
 
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
--- :BarbarDisable - very bad command, should never be used
+-- :BarbarDisable - very bad command, should never be used- :BarbarDisable - very bad command, should never be used

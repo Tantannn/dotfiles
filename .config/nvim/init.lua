@@ -798,6 +798,7 @@ end)
 
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("i", "<C-c>", "<Esc>")
 
 --nvim tree
 require("nvim-tree").setup({

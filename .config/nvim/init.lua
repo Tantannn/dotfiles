@@ -1,3 +1,4 @@
+
 --[[
 
 =====================================================================
@@ -354,6 +355,13 @@ require('lazy').setup({
   {'sublimelsp/LSP-tailwindcss'},
   --vim surround 
   {'tpope/vim-surround'},
+  --prettier
+  {'MunifTanjim/prettier.nvim', 
+    cli_options = {
+      -- https://prettier.io/docs/en/cli.html#--config-precedence
+      config_precedence = "prefer-file", -- or "cli-override" or "file-override"
+    },
+  },
 
   { import = 'custom.plugins' },
 }, {})
@@ -777,7 +785,6 @@ map('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
 
 --ThePrimeagen keymaps
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -816,9 +823,11 @@ require("nvim-tree").setup({
 vim.keymap.set("n", "<A-b>", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<A-e>", vim.cmd.NvimTreeFocus)
 
--- keymap for undotree
+-- keymaps for undotree
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = 'ToggleUndoTree' })
 
+-- prettier keymap
+vim.keymap.set("n", "<leader>f", vim.cmd.Prettier, { desc = 'Prettier format'})
 --auto pair 
 require('nvim-autopairs').setup({
   disable_filetype = { "TelescopePrompt" , "vim" },
@@ -933,6 +942,7 @@ vim.cmd('hi normal guibg=none ctermbg=none')
 vim.cmd('hi endofbuffer guibg=none ctermbg=none')
 vim.cmd('hi nvimtreeendofbuffer guibg=none ctermbg=none')
 vim.cmd[[hi nvimtreenormal guibg=none ctermbg=none]]
+
 
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)

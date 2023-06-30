@@ -144,7 +144,7 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'onedark'
-      vim.cmd.style 'warmer'
+      -- vim.cmd.style 'warmer'
     end,
   },
 
@@ -757,6 +757,11 @@ cmp.setup {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
+require('onedark').setup {
+    style = 'darker'
+}
+
+require('onedark').load()
 require'barbar'.setup {
     sidebar_filetypes = {
     -- Use the default values: {event = 'BufWinLeave', text = nil}
@@ -1057,6 +1062,7 @@ require("nvim-navic").setup({
     safe_output = true,
     click = false
 })
+
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used- :BarbarDisable - very bad command, should never be used

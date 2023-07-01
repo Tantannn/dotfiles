@@ -375,19 +375,19 @@ require('lazy').setup({
     },
   },
   --barbecue
-  {
-  "utilyre/barbecue.nvim",
-    name = "barbecue",
-    version = "*",
-    dependencies = {
-      "SmiteshP/nvim-navic",
-      "nvim-tree/nvim-web-devicons", -- optional dependency
-    },
-    opts = {
-    -- configurations go here
-    },
-  },
-
+  -- {
+  -- "utilyre/barbecue.nvim",
+  --   name = "barbecue",
+  --   version = "*",
+  --   dependencies = {
+  --     "SmiteshP/nvim-navic",
+  --     "nvim-tree/nvim-web-devicons", -- optional dependency
+  --   },
+  --   opts = {
+  --     attach_navic = false,   -- configurations go here
+  --   },
+  -- },
+  --
 
   { import = 'custom.plugins' },
 }, {})
@@ -678,7 +678,7 @@ mason_lspconfig.setup_handlers {
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,
-      settings = servers[server_name],
+      settings = servers[server_name], 
     }
   end,
 }
@@ -975,93 +975,94 @@ vim.cmd('hi nvimtreeendofbuffer guibg=none ctermbg=none')
 vim.cmd[[hi nvimtreenormal guibg=none ctermbg=none]]
 
 --barbecue custom theme
-require("barbecue").setup({
-  theme = {
-    -- this highlight is used to override other highlights
-    -- you can take advantage of its `bg` and set a background throughout your winbar
-    -- (e.g. basename will look like this: { fg = "#c0caf5", bold = true })
-    normal = { fg = "#c0caf5" }
-
-    -- these highlights correspond to symbols table from config
-    -- ellipsis = { fg = "#737aa2" },
-    -- separator = { fg = "#737aa2" },
-    -- modified = { fg = "#737aa2" },
-    --
-    -- these highlights represent the _text_ of three main parts of barbecue
-    -- dirname = { fg = "#737aa2" },
-    -- basename = { bold = true },
-    -- context = {},
-
-    -- these highlights are used for context/navic icons
-    -- context_file = { fg = "#ac8fe4" },
-    -- context_module = { fg = "#ac8fe4" },
-    -- context_namespace = { fg = "#ac8fe4" },
-    -- context_package = { fg = "#ac8fe4" },
-    -- context_class = { fg = "#ac8fe4" },
-    -- context_method = { fg = "#ac8fe4" },
-    -- context_property = { fg = "#ac8fe4" },
-    -- context_field = { fg = "#ac8fe4" },
-    -- context_constructor = { fg = "#ac8fe4" },
-    -- context_enum = { fg = "#ac8fe4" },
-    -- context_interface = { fg = "#ac8fe4" },
-    -- context_function = { fg = "#ac8fe4" },
-    -- context_variable = { fg = "#ac8fe4" },
-    -- context_constant = { fg = "#ac8fe4" },
-    -- context_string = { fg = "#ac8fe4" },
-    -- context_number = { fg = "#ac8fe4" },
-    -- context_boolean = { fg = "#ac8fe4" },
-    -- context_array = { fg = "#ac8fe4" },
-    -- context_object = { fg = "#ac8fe4" },
-    -- context_key = { fg = "#ac8fe4" },
-    -- context_null = { fg = "#ac8fe4" },
-    -- context_enum_member = { fg = "#ac8fe4" },
-    -- context_struct = { fg = "#ac8fe4" },
-    -- context_event = { fg = "#ac8fe4" },
-    -- context_operator = { fg = "#ac8fe4" },
-    -- context_type_parameter = { fg = "#ac8fe4" },
-  },
-})
-
-require("nvim-navic").setup({
-    icons = {
-        File          = "󰈙 ",
-        Module        = " ",
-        Namespace     = "󰌗 ",
-        Package       = " ",
-        Class         = "󰌗 ",
-        Method        = "󰆧 ",
-        Property      = " ",
-        Field         = " ",
-        Constructor   = " ",
-        Enum          = "󰕘",
-        Interface     = "󰕘",
-        Function      = "󰊕 ",
-        Variable      = "󰆧 ",
-        Constant      = "󰏿 ",
-        String        = "󰀬 ",
-        Number        = "󰎠 ",
-        Boolean       = "◩ ",
-        Array         = "󰅪 ",
-        Object        = "󰅩 ",
-        Key           = "󰌋 ",
-        Null          = "󰟢 ",
-        EnumMember    = " ",
-        Struct        = "󰌗 ",
-        Event         = " ",
-        Operator      = "󰆕 ",
-        TypeParameter = "󰊄 ",
-    },
-    lsp = {
-        auto_attach = false,
-        preference = nil,
-    },
-    highlight = false,
-    separator = " > ",
-    depth_limit = 0,
-    depth_limit_indicator = "..",
-    safe_output = true,
-    click = false
-})
+-- require("barbecue").setup({
+--   theme = {
+--     -- this highlight is used to override other highlights
+--     -- you can take advantage of its `bg` and set a background throughout your winbar
+--     -- (e.g. basename will look like this: { fg = "#c0caf5", bold = true })
+--     normal = { fg = "#c0caf5" }
+--
+--     -- these highlights correspond to symbols table from config
+--     -- ellipsis = { fg = "#737aa2" },
+--     -- separator = { fg = "#737aa2" },
+--     -- modified = { fg = "#737aa2" },
+--     --
+--     -- these highlights represent the _text_ of three main parts of barbecue
+--     -- dirname = { fg = "#737aa2" },
+--     -- basename = { bold = true },
+--     -- context = {},
+--
+--     -- these highlights are used for context/navic icons
+--     -- context_file = { fg = "#ac8fe4" },
+--     -- context_module = { fg = "#ac8fe4" },
+--     -- context_namespace = { fg = "#ac8fe4" },
+--     -- context_package = { fg = "#ac8fe4" },
+--     -- context_class = { fg = "#ac8fe4" },
+--     -- context_method = { fg = "#ac8fe4" },
+--     -- context_property = { fg = "#ac8fe4" },
+--     -- context_field = { fg = "#ac8fe4" },
+--     -- context_constructor = { fg = "#ac8fe4" },
+--     -- context_enum = { fg = "#ac8fe4" },
+--     -- context_interface = { fg = "#ac8fe4" },
+--     -- context_function = { fg = "#ac8fe4" },
+--     -- context_variable = { fg = "#ac8fe4" },
+--     -- context_constant = { fg = "#ac8fe4" },
+--     -- context_string = { fg = "#ac8fe4" },
+--     -- context_number = { fg = "#ac8fe4" },
+--     -- context_boolean = { fg = "#ac8fe4" },
+--     -- context_array = { fg = "#ac8fe4" },
+--     -- context_object = { fg = "#ac8fe4" },
+--     -- context_key = { fg = "#ac8fe4" },
+--     -- context_null = { fg = "#ac8fe4" },
+--     -- context_enum_member = { fg = "#ac8fe4" },
+--     -- context_struct = { fg = "#ac8fe4" },
+--     -- context_event = { fg = "#ac8fe4" },
+--     -- context_operator = { fg = "#ac8fe4" },
+--     -- context_type_parameter = { fg = "#ac8fe4" },
+--     --
+--   },
+-- })
+--
+-- require("nvim-navic").setup({
+--     icons = {
+--         File          = "󰈙 ",
+--         Module        = " ",
+--         Namespace     = "󰌗 ",
+--         Package       = " ",
+--         Class         = "󰌗 ",
+--         Method        = "󰆧 ",
+--         Property      = " ",
+--         Field         = " ",
+--         Constructor   = " ",
+--         Enum          = "󰕘",
+--         Interface     = "󰕘",
+--         Function      = "󰊕 ",
+--         Variable      = "󰆧 ",
+--         Constant      = "󰏿 ",
+--         String        = "󰀬 ",
+--         Number        = "󰎠 ",
+--         Boolean       = "◩ ",
+--         Array         = "󰅪 ",
+--         Object        = "󰅩 ",
+--         Key           = "󰌋 ",
+--         Null          = "󰟢 ",
+--         EnumMember    = " ",
+--         Struct        = "󰌗 ",
+--         Event         = " ",
+--         Operator      = "󰆕 ",
+--         TypeParameter = "󰊄 ",
+--     },
+--     -- lsp = {
+--     --     auto_attach = false,
+--     --     preference = nil,
+--     -- },
+--     highlight = false,
+--     separator = " > ",
+--     depth_limit = 0,
+--     depth_limit_indicator = "..",
+--     safe_output = true,
+--     click = false
+-- })
 
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)

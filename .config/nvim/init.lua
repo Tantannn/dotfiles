@@ -374,20 +374,19 @@ require('lazy').setup({
       config_precedence = "prefer-file", -- or "cli-override" or "file-override"
     },
   },
-  --barbecue
-  -- {
-  -- "utilyre/barbecue.nvim",
-  --   name = "barbecue",
-  --   version = "*",
-  --   dependencies = {
-  --     "SmiteshP/nvim-navic",
-  --     "nvim-tree/nvim-web-devicons", -- optional dependency
-  --   },
-  --   opts = {
-  --     attach_navic = false,   -- configurations go here
-  --   },
-  -- },
-  --
+  -- barbecue
+  {
+  "utilyre/barbecue.nvim",
+    name = "barbecue",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    opts = {
+      attach_navic = false,   -- configurations go here
+    },
+  },
 
   { import = 'custom.plugins' },
 }, {})

@@ -367,6 +367,8 @@ require('lazy').setup({
   {'sublimelsp/LSP-tailwindcss'},
   --vim surround 
   {'tpope/vim-surround'},
+  --vim repeat
+  {'tpope/vim-repeat'},
   --prettier
   {'MunifTanjim/prettier.nvim',
     cli_options = {

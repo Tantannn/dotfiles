@@ -932,24 +932,12 @@ require'nvim-web-devicons'.setup {
 }
 
 -- trouble
-vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
-  {silent = true, noremap = true}
-)
+vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>")
+vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>")
+vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>")
+vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>")
+vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>")
+vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>")
 local null_ls = require("null-ls")
 local eslint = require("eslint")
 
@@ -1071,19 +1059,19 @@ vim.cmd[[hi nvimtreenormal guibg=none ctermbg=none]]
 -- })
 
 -- css color 
-vim.keymap.set("n", "<C-c>", "<cmd>PickColor<cr>", opts)
-vim.keymap.set("i", "<C-c>", "<cmd>PickColorInsert<cr>", opts)
+vim.keymap.set("n", "<C-q>", "<cmd>PickColor<cr>", opts)
+vim.keymap.set("i", "<C-q>", "<cmd>PickColorInsert<cr>", opts)
 
 -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandRGB<cr>", opts)
 -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandHSL<cr>", opts)
 
 require("color-picker").setup({ -- for changing icons & mappings
-	-- ["icons"] = { "ﱢ", "" },
+	["icons"] = { "ﱢ", "" },
 	-- ["icons"] = { "ﮊ", "" },
 	-- ["icons"] = { "", "ﰕ" },
 	-- ["icons"] = { "", "" },
 	-- ["icons"] = { "", "" },
-	["icons"] = { "ﱢ", "" },
+	-- ["icons"] = { "ﱢ", "" },
 	["border"] = "rounded", -- none | single | double | rounded | solid | shadow
 	["keymap"] = { -- mapping example:
 		["U"] = "<Plug>ColorPickerSlider5Decrease",

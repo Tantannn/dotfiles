@@ -10,4 +10,5 @@ Clone onto laptop:
 use:
 - Telescope keymaps
 - Telescope help_tags
+  
 to search for keywords

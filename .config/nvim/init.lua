@@ -386,7 +386,6 @@ require('lazy').setup({
       "nvim-tree/nvim-web-devicons", -- optional dependency
     },
     opts = {
-      attach_navic = false,   -- configurations go here
     },
   },
   -- lightspeed search
@@ -394,6 +393,8 @@ require('lazy').setup({
   -- css color
   {'ap/vim-css-color'},
   {'ziontee113/color-picker.nvim'},
+  -- load faster
+  {'lewis6991/impatient.nvim'},
 
   { import = 'custom.plugins' },
 }, {})
@@ -1082,8 +1083,20 @@ require("color-picker").setup({ -- for changing icons & mappings
   ["text_highlight_group"] = "Normal", --default
 })
 
-vim.cmd([[hi FloatBorder guibg=NONE]]) 
+vim.cmd([[hi FloatBorder guibg=NONE]])
 
+--faster loading
+_G.__luacache_config = {
+  chunks = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_chunks',
+  },
+  modpaths = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
+  }
+}
+require('impatient')
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used- :BarbarDisable - very bad command, should never be used

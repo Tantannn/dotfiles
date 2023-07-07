@@ -19,7 +19,6 @@ Kickstart.nvim is a template for your own configuration.
 
   And then you can explore or search through `:help lua-guide`
 
-
 Kickstart Guide:
 
 I have left several `:help X` comments throughout the init.lua
@@ -361,12 +360,27 @@ require('lazy').setup({
   {'neovim/nvim-lspconfig'},
   {'jose-elias-alvarez/null-ls.nvim'},
   {'MunifTanjim/eslint.nvim'},
-  --Search
-  -- {'junegunn/fzf.vim'}
+
   --tailwindcss
   {'sublimelsp/LSP-tailwindcss'},
   --vim surround 
-  {'tpope/vim-surround'},
+  {
+    "tpope/vim-surround",
+    keys = {"c", "d", "y"},
+    config = function ()
+      vim.cmd("nmap ds       <Plug>Dsurround")
+      vim.cmd("nmap cs       <Plug>Csurround")
+      vim.cmd("nmap cS       <Plug>CSurround")
+      vim.cmd("nmap ys       <Plug>Ysurround")
+      vim.cmd("nmap yS       <Plug>YSurround")
+      vim.cmd("nmap yss      <Plug>Yssurround")
+      vim.cmd("nmap ySs      <Plug>YSsurround")
+      vim.cmd("nmap ySS      <Plug>YSsurround")
+      vim.cmd("xmap gs       <Plug>VSurround")
+      vim.cmd("xmap gS       <Plug>VgSurround")
+    end
+    ,
+  },
   --vim repeat
   {'tpope/vim-repeat'},
   --prettier

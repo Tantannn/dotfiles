@@ -464,8 +464,6 @@ vim.opt.undofile = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
-vim.opt.termguicolors = true
-
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
@@ -788,12 +786,13 @@ require'barbar'.setup {
     -- Use the default values: {event = 'BufWinLeave', text = nil}
     NvimTree = true,
     -- Or, specify the text used for the offset:
-    -- undotree = {text = 'undotree'},
+    undotree = {text = 'undotree'},
     -- Or, specify the event which the sidebar executes when leaving:
     --['neo-tree'] = {event = 'BufWipeout'},
     -- Or, specify both
     -- Outline = {event = 'BufWinLeave', text = 'symbols-outline'},
   },
+
 }
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
@@ -865,11 +864,45 @@ require("nvim-tree").setup({
     width = 30,
   },
   renderer = {
+    full_name = true,
     group_empty = true,
+    special_files = {},
+    symlink_destination = false,
+    indent_markers = {
+      enable = true,
+    },
   },
   filters = {
     dotfiles = true,
   },
+    actions = {
+      change_dir = {
+        enable = false,
+        restrict_above_cwd = true,
+      },
+      open_file = {
+        resize_window = true,
+        window_picker = {
+          chars = "aoeui",
+        },
+      },
+      remove_file = {
+        close_window = false,
+      },
+    },
+    log = {
+      enable = false,
+      truncate = true,
+      types = {
+        all = false,
+        config = false,
+        copy_paste = false,
+        diagnostics = false,
+        git = false,
+        profile = false,
+        watcher = false,
+      },
+    },
 })
 -- nvim tree keymaps
 vim.keymap.set("n", "<A-b>", vim.cmd.NvimTreeToggle)

@@ -73,7 +73,7 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-      prefer_startup_root = false,
+  prefer_startup_root = false,
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -167,8 +167,8 @@ require('lazy').setup({
           lualine_y = {},
           lualine_z = {},
         },
-    tabline = {},
-    extensions = {},
+        tabline = {},
+        extensions = {},
       },
     },
   },
@@ -224,7 +224,7 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
-    {'romgrk/barbar.nvim',
+  {'romgrk/barbar.nvim',
     dependencies = {
       'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
     },
@@ -235,17 +235,17 @@ require('lazy').setup({
       -- insert_at_start = true,
       -- …etc.
 
-  -- Set the filetypes which barbar will offset itself for
-  sidebar_filetypes = {
-    -- Use the default values: {event = 'BufWinLeave', text = nil}
-    -- NvimTree = true,
-    -- Or, specify the text used for the offset:
-     undotree = {text = 'undotree'},
-    -- Or, specify the event which the sidebar executes when leaving:
-    -- ['neo-tree'] = {event = 'BufWipeout'},
-    -- Or, specify both
-    Outline = {event = 'BufWinLeave', text = 'symbols-outline'},
-  },
+      -- Set the filetypes which barbar will offset itself for
+      sidebar_filetypes = {
+        -- Use the default values: {event = 'BufWinLeave', text = nil}
+        -- NvimTree = true,
+        -- Or, specify the text used for the offset:
+        undotree = {text = 'undotree'},
+        -- Or, specify the event which the sidebar executes when leaving:
+        -- ['neo-tree'] = {event = 'BufWipeout'},
+        -- Or, specify both
+        Outline = {event = 'BufWinLeave', text = 'symbols-outline'},
+      },
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
@@ -255,40 +255,40 @@ require('lazy').setup({
     "Pocco81/auto-save.nvim",
     config = function()
       require("auto-save").setup {
-	-- your config goes here
-	-- or just leave it empty :)
-	enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
-	execution_message = {
-	  message = function() -- message to print on save
-	    return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
-	  end,
-	  dim = 0.18, -- dim the color of `message`
-	  cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
-	},
-	trigger_events = {"InsertLeave", "TextChanged"}, -- vim events that trigger auto-save. See :h events
-	-- function that determines whether to save the current buffer or not
-	-- return true: if buffer is ok to be saved
-	-- return false: if it's not ok to be saved
-	condition = function(buf)
-	  local fn = vim.fn
-	  local utils = require("auto-save.utils.data")
+        -- your config goes here
+        -- or just leave it empty :)
+        enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
+        execution_message = {
+          message = function() -- message to print on save
+            return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+          end,
+          dim = 0.18, -- dim the color of `message`
+          cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
+        },
+        trigger_events = {"InsertLeave", "TextChanged"}, -- vim events that trigger auto-save. See :h events
+        -- function that determines whether to save the current buffer or not
+        -- return true: if buffer is ok to be saved
+        -- return false: if it's not ok to be saved
+        condition = function(buf)
+          local fn = vim.fn
+          local utils = require("auto-save.utils.data")
 
-	  if
-	    fn.getbufvar(buf, "&modifiable") == 1 and
-	    utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
-	    return true -- met condition(s), can save
-	  end
-	  return false -- can't save
-	end,
-	write_all_buffers = true, -- write all buffers when the current one meets `condition`
-	debounce_delay = 135, -- saves the file at most every `debounce_delay` milliseconds
-	callbacks = { -- functions to be executed at different intervals
-	  enabling = nil, -- ran when enabling auto-save
-	  disabling = nil, -- ran when disabling auto-save
-	  before_asserting_save = nil, -- ran before checking `condition`
-	  before_saving = nil, -- ran before doing the actual save
-	  after_saving = nil -- ran after doing the actual save
-	}
+          if
+            fn.getbufvar(buf, "&modifiable") == 1 and
+            utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+            return true -- met condition(s), can save
+          end
+          return false -- can't save
+        end,
+        write_all_buffers = true, -- write all buffers when the current one meets `condition`
+        debounce_delay = 135, -- saves the file at most every `debounce_delay` milliseconds
+        callbacks = { -- functions to be executed at different intervals
+          enabling = nil, -- ran when enabling auto-save
+          disabling = nil, -- ran when disabling auto-save
+          before_asserting_save = nil, -- ran before checking `condition`
+          before_saving = nil, -- ran before doing the actual save
+          after_saving = nil -- ran after doing the actual save
+        }
 
       }
     end,
@@ -305,19 +305,19 @@ require('lazy').setup({
   {"lukas-reineke/indent-blankline.nvim" },
   --trouble shooting
   {
- "folke/trouble.nvim",
- opts = {
-    position = "bottom", -- position of the list can be: bottom, top, left, right
-    height = 10, -- height of the trouble list when position is top or bottom
-    width = 50, -- width of the list when position is left or right
-    icons = true, -- use devicons for filenames
-    mode = "workspace_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
-    severity = nil, -- nil (ALL) or vim.diagnostic.severity.ERROR | WARN | INFO | HINT
-    fold_open = "", -- icon used for open folds
-    fold_closed = "", -- icon used for closed folds
-    group = true, -- group results by file
-    padding = true, -- add an extra new line on top of the list
-    action_keys = { -- key mappings for actions in the trouble list
+    "folke/trouble.nvim",
+    opts = {
+      position = "bottom", -- position of the list can be: bottom, top, left, right
+      height = 10, -- height of the trouble list when position is top or bottom
+      width = 50, -- width of the list when position is left or right
+      icons = true, -- use devicons for filenames
+      mode = "workspace_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
+      severity = nil, -- nil (ALL) or vim.diagnostic.severity.ERROR | WARN | INFO | HINT
+      fold_open = "", -- icon used for open folds
+      fold_closed = "", -- icon used for closed folds
+      group = true, -- group results by file
+      padding = true, -- add an extra new line on top of the list
+      action_keys = { -- key mappings for actions in the trouble list
         -- map to {} to remove a mapping, for example:
         -- close = {},
         close = "q", -- close the list
@@ -338,24 +338,24 @@ require('lazy').setup({
         toggle_fold = {"zA", "za"}, -- toggle fold of current file
         previous = "k", -- previous item
         next = "j" -- next item
-    },
-    indent_lines = true, -- add an indent guide below the fold icons
-    auto_open = false, -- automatically open the list when you have diagnostics
-    auto_close = false, -- automatically close the list when you have no diagnostics
-    auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
-    auto_fold = false, -- automatically fold a file trouble list at creation
-    auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
-    signs = {
+      },
+      indent_lines = true, -- add an indent guide below the fold icons
+      auto_open = false, -- automatically open the list when you have diagnostics
+      auto_close = false, -- automatically close the list when you have no diagnostics
+      auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+      auto_fold = false, -- automatically fold a file trouble list at creation
+      auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
+      signs = {
         -- icons / text used for a diagnostic
         error = "",
         warning = "",
         hint = "",
         information = "",
         other = "﫠"
+      },
+      use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
     },
-    use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
-},
-},
+  },
   --auto import
   {'neovim/nvim-lspconfig'},
   {'jose-elias-alvarez/null-ls.nvim'},
@@ -392,7 +392,7 @@ require('lazy').setup({
   },
   -- barbecue
   {
-  "utilyre/barbecue.nvim",
+    "utilyre/barbecue.nvim",
     name = "barbecue",
     version = "*",
     dependencies = {
@@ -764,7 +764,7 @@ cmp.setup {
     {
       name = 'buffer',
       option = {
-	keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%([\-.]\w*\)*\)]],
+        keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%([\-.]\w*\)*\)]],
         get_bufnrs = function()
           return vim.api.nvim_list_bufs()
         end
@@ -777,12 +777,13 @@ cmp.setup {
 -- vim: ts=2 sts=2 sw=2 et
 
 require('onedark').setup {
-    style = 'darker'
+  style = 'darker'
 }
 
 require('onedark').load()
 require'barbar'.setup {
-    sidebar_filetypes = {
+  auto_hide = false,
+  sidebar_filetypes = {
     -- Use the default values: {event = 'BufWinLeave', text = nil}
     NvimTree = true,
     -- Or, specify the text used for the offset:
@@ -847,10 +848,10 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 vim.keymap.set("n", "<leader>vwm", function()
-    require("vim-with-me").StartVimWithMe()
+  require("vim-with-me").StartVimWithMe()
 end)
 vim.keymap.set("n", "<leader>svwm", function()
-    require("vim-with-me").StopVimWithMe()
+  require("vim-with-me").StopVimWithMe()
 end)
 
 -- greatest remap ever
@@ -875,34 +876,34 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = true,
   },
-    actions = {
-      change_dir = {
-        enable = false,
-        restrict_above_cwd = true,
-      },
-      open_file = {
-        resize_window = true,
-        window_picker = {
-          chars = "aoeui",
-        },
-      },
-      remove_file = {
-        close_window = false,
-      },
-    },
-    log = {
+  actions = {
+    change_dir = {
       enable = false,
-      truncate = true,
-      types = {
-        all = false,
-        config = false,
-        copy_paste = false,
-        diagnostics = false,
-        git = false,
-        profile = false,
-        watcher = false,
+      restrict_above_cwd = true,
+    },
+    open_file = {
+      resize_window = true,
+      window_picker = {
+        chars = "aoeui",
       },
     },
+    remove_file = {
+      close_window = false,
+    },
+  },
+  log = {
+    enable = false,
+    truncate = true,
+    types = {
+      all = false,
+      config = false,
+      copy_paste = false,
+      diagnostics = false,
+      git = false,
+      profile = false,
+      watcher = false,
+    },
+  },
 })
 -- nvim tree keymaps
 vim.keymap.set("n", "<A-b>", vim.cmd.NvimTreeToggle)
@@ -923,60 +924,60 @@ vim.opt.list = true
 -- vim.opt.listchars:append "eol:↴"
 
 require("indent_blankline").setup {
-    space_char_blankline = " ",
-    show_current_context = true,
-    -- show_current_context_start = true,
-    -- char_highlight_list = {
-    --     "IndentBlanklineIndent1",
-    --     "IndentBlanklineIndent2",
-    --     "IndentBlanklineIndent3",
-    --     "IndentBlanklineIndent4",
-    --     "IndentBlanklineIndent5",
-    --     "IndentBlanklineIndent6",
-    -- },
+  space_char_blankline = " ",
+  show_current_context = true,
+  -- show_current_context_start = true,
+  -- char_highlight_list = {
+  --     "IndentBlanklineIndent1",
+  --     "IndentBlanklineIndent2",
+  --     "IndentBlanklineIndent3",
+  --     "IndentBlanklineIndent4",
+  --     "IndentBlanklineIndent5",
+  --     "IndentBlanklineIndent6",
+  -- },
 }
 --icon
 require'nvim-web-devicons'.setup {
- -- your personnal icons can go here (to override)
- -- you can specify color or cterm_color instead of specifying both of them
- -- DevIcon will be appended to `name`
- override = {
-  zsh = {
-    icon = "",
-    color = "#428850",
-    cterm_color = "65",
-    name = "Zsh"
-  }
- };
- -- globally enable different highlight colors per icon (default to true)
- -- if set to false all icons will have the default icon's color
- color_icons = true;
- -- globally enable default icons (default to false)
- -- will get overriden by `get_icons` option
- default = true;
- -- globally enable "strict" selection of icons - icon will be looked up in
- -- different tables, first by filename, and if not found by extension; this
- -- prevents cases when file doesn't have any extension but still gets some icon
- -- because its name happened to match some extension (default to false)
- strict = true;
- -- same as `override` but specifically for overrides by filename
- -- takes effect when `strict` is true
- override_by_filename = {
-  [".gitignore"] = {
-    icon = "",
-    color = "#f1502f",
-    name = "Gitignore"
-  }
- };
- -- same as `override` but specifically for overrides by extension
- -- takes effect when `strict` is true
- override_by_extension = {
-  ["log"] = {
-    icon = "",
-    color = "#81e043",
-    name = "Log"
-  }
- };
+  -- your personnal icons can go here (to override)
+  -- you can specify color or cterm_color instead of specifying both of them
+  -- DevIcon will be appended to `name`
+  override = {
+    zsh = {
+      icon = "",
+      color = "#428850",
+      cterm_color = "65",
+      name = "Zsh"
+    }
+  };
+  -- globally enable different highlight colors per icon (default to true)
+  -- if set to false all icons will have the default icon's color
+  color_icons = true;
+  -- globally enable default icons (default to false)
+  -- will get overriden by `get_icons` option
+  default = true;
+  -- globally enable "strict" selection of icons - icon will be looked up in
+  -- different tables, first by filename, and if not found by extension; this
+  -- prevents cases when file doesn't have any extension but still gets some icon
+  -- because its name happened to match some extension (default to false)
+  strict = true;
+  -- same as `override` but specifically for overrides by filename
+  -- takes effect when `strict` is true
+  override_by_filename = {
+    [".gitignore"] = {
+      icon = "",
+      color = "#f1502f",
+      name = "Gitignore"
+    }
+  };
+  -- same as `override` but specifically for overrides by extension
+  -- takes effect when `strict` is true
+  override_by_extension = {
+    ["log"] = {
+      icon = "",
+      color = "#81e043",
+      name = "Log"
+    }
+  };
 }
 
 -- trouble
@@ -1114,19 +1115,19 @@ vim.keymap.set("i", "<C-q>", "<cmd>PickColorInsert<cr>", opts)
 -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandHSL<cr>", opts)
 
 require("color-picker").setup({ -- for changing icons & mappings
-	["icons"] = { "ﱢ", "" },
-	-- ["icons"] = { "ﮊ", "" },
-	-- ["icons"] = { "", "ﰕ" },
-	-- ["icons"] = { "", "" },
-	-- ["icons"] = { "", "" },
-	-- ["icons"] = { "ﱢ", "" },
-	["border"] = "rounded", -- none | single | double | rounded | solid | shadow
-	["keymap"] = { -- mapping example:
-		["U"] = "<Plug>ColorPickerSlider5Decrease",
-		["O"] = "<Plug>ColorPickerSlider5Increase",
-	},
-	["background_highlight_group"] = "Normal", -- default
-	["border_highlight_group"] = "FloatBorder", -- default
+  ["icons"] = { "ﱢ", "" },
+  -- ["icons"] = { "ﮊ", "" },
+  -- ["icons"] = { "", "ﰕ" },
+  -- ["icons"] = { "", "" },
+  -- ["icons"] = { "", "" },
+  -- ["icons"] = { "ﱢ", "" },
+  ["border"] = "rounded", -- none | single | double | rounded | solid | shadow
+  ["keymap"] = { -- mapping example:
+    ["U"] = "<Plug>ColorPickerSlider5Decrease",
+    ["O"] = "<Plug>ColorPickerSlider5Increase",
+  },
+  ["background_highlight_group"] = "Normal", -- default
+  ["border_highlight_group"] = "FloatBorder", -- default
   ["text_highlight_group"] = "Normal", --default
 })
 

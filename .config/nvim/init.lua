@@ -380,6 +380,9 @@ require('lazy').setup({
       vim.cmd("xmap gS       <Plug>VgSurround")
     end
     ,
+    init = function()
+            vim.g.surround_no_mappings = 1
+        end
   },
   --vim repeat
   {'tpope/vim-repeat'},

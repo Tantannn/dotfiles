@@ -46,6 +46,17 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
+--faster loading
+_G.__luacache_config = {
+  chunks = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_chunks',
+  },
+  modpaths = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
+  }
+}
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -428,6 +439,9 @@ require('lazy').setup({
 
   { import = 'custom.plugins' },
 }, {})
+
+
+require('impatient').enable_profile()
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -1159,19 +1173,6 @@ require("color-picker").setup({ -- for changing icons & mappings
 })
 
 vim.cmd([[hi FloatBorder guibg=NONE]])
-
---faster loading
-_G.__luacache_config = {
-  chunks = {
-    enable = true,
-    path = vim.fn.stdpath('cache')..'/luacache_chunks',
-  },
-  modpaths = {
-    enable = true,
-    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
-  }
-}
-require('impatient').enable_profile()
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used- :BarbarDisable - very bad command, should never be used

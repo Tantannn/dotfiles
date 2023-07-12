@@ -424,6 +424,7 @@ require('lazy').setup({
       vim.keymap.set('i', '<C-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
     end
   },
+  {'xiyaowong/transparent.nvim'},
 
   { import = 'custom.plugins' },
 }, {})
@@ -880,6 +881,10 @@ end)
 vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
+-- my custom keymaps
+vim.keymap.set("n", "<leader>o", "o<Esc>")
+vim.keymap.set("n", "<leader>O", "O<Esc>")
+
 --nvim tree
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
@@ -1034,8 +1039,8 @@ eslint.setup({
   },
 })
 --transparent
-vim.cmd('hi normal guibg=none ctermbg=none')
-vim.cmd('hi endofbuffer guibg=none ctermbg=none')
+-- vim.cmd('hi normal guibg=none ctermbg=none')
+-- vim.cmd('hi endofbuffer guibg=none ctermbg=none')
 vim.cmd('hi nvimtreeendofbuffer guibg=none ctermbg=none')
 vim.cmd[[hi nvimtreenormal guibg=none ctermbg=none]]
 

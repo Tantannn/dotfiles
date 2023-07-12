@@ -1171,7 +1171,7 @@ _G.__luacache_config = {
     path = vim.fn.stdpath('cache')..'/luacache_modpaths',
   }
 }
-require('impatient')
+require('impatient').enable_profile()
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used- :BarbarDisable - very bad command, should never be used

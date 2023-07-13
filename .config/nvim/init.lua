@@ -46,17 +46,6 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
---faster loading
-_G.__luacache_config = {
-  chunks = {
-    enable = true,
-    path = vim.fn.stdpath('cache')..'/luacache_chunks',
-  },
-  modpaths = {
-    enable = true,
-    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
-  }
-}
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -432,7 +421,7 @@ require('lazy').setup({
 }, {})
 
 
-require('impatient').enable_profile()
+
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -555,7 +544,6 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>sa', require('telescope.builtin').live_grep, { desc = '[S]earch in [A]ll files' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -891,16 +879,14 @@ vim.keymap.set("n", "<leader>o", "o<Esc>")
 vim.keymap.set("n", "<leader>O", "O<Esc>")
 
 --nvim tree
+--nvim tree
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
   view = {
     width = 30,
   },
   renderer = {
-    full_name = true,
     group_empty = true,
-    special_files = {},
-    symlink_destination = false,
     indent_markers = {
       enable = true,
     },
@@ -908,34 +894,7 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = true,
   },
-  actions = {
-    change_dir = {
-      enable = false,
-      restrict_above_cwd = true,
-    },
-    open_file = {
-      resize_window = true,
-      window_picker = {
-        chars = "aoeui",
-      },
-    },
-    remove_file = {
-      close_window = false,
-    },
-  },
-  log = {
-    enable = false,
-    truncate = true,
-    types = {
-      all = false,
-      config = false,
-      copy_paste = false,
-      diagnostics = false,
-      git = false,
-      profile = false,
-      watcher = false,
-    },
-  },
+
 })
 -- nvim tree keymaps
 vim.keymap.set("n", "<A-b>", vim.cmd.NvimTreeToggle)
@@ -1164,6 +1123,18 @@ require("color-picker").setup({ -- for changing icons & mappings
 })
 
 vim.cmd([[hi FloatBorder guibg=NONE]])
+--faster loading
+_G.__luacache_config = {
+  chunks = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_chunks',
+  },
+  modpaths = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
+  }
+}
+require('impatient').enable_profile()
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used- :BarbarDisable - very bad command, should never be used

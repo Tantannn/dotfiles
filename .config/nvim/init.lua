@@ -411,8 +411,6 @@ require('lazy').setup({
   -- css color
   {'ap/vim-css-color'},
   {'ziontee113/color-picker.nvim'},
-  -- load faster
-  {'lewis6991/impatient.nvim'},
   --codeium AI
   {  'Exafunction/codeium.vim',
   config = function ()
@@ -870,22 +868,20 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set("n", "<leader>vwm", function()
-  require("vim-with-me").StartVimWithMe()
-end)
-vim.keymap.set("n", "<leader>svwm", function()
-  require("vim-with-me").StopVimWithMe()
-end)
-
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set("i", "<C-c>", "<Esc>")
+-- next greatest remap ever : asbjornHaland
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],{ desc = 'Change all word' } )
 
 -- my custom keymaps
 vim.keymap.set("n", "<leader>o", "o<Esc>")
 vim.keymap.set("n", "<leader>O", "O<Esc>")
 
---nvim tree
 --nvim tree
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
@@ -1130,18 +1126,6 @@ require("color-picker").setup({ -- for changing icons & mappings
 })
 
 vim.cmd([[hi FloatBorder guibg=NONE]])
---faster loading
-_G.__luacache_config = {
-  chunks = {
-    enable = true,
-    path = vim.fn.stdpath('cache')..'/luacache_chunks',
-  },
-  modpaths = {
-    enable = true,
-    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
-  }
-}
-require('impatient').enable_profile()
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used- :BarbarDisable - very bad command, should never be used

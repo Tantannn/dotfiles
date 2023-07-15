@@ -366,20 +366,18 @@ require('lazy').setup({
   --vim surround 
   {
     "tpope/vim-surround",
-    keys = {"c", "d", "y"},
-    config = function ()
-      vim.cmd("nmap ds       <Plug>Dsurround")
-      vim.cmd("nmap cs       <Plug>Csurround")
-      vim.cmd("nmap cS       <Plug>CSurround")
-      vim.cmd("nmap ys       <Plug>Ysurround")
-      vim.cmd("nmap yS       <Plug>YSurround")
-      vim.cmd("nmap yss      <Plug>Yssurround")
-      vim.cmd("nmap ySs      <Plug>YSsurround")
-      vim.cmd("nmap ySS      <Plug>YSsurround")
-      vim.cmd("xmap gs       <Plug>VSurround")
-      vim.cmd("xmap gS       <Plug>VgSurround")
-    end
-    ,
+        keys = {
+            { "cs", "<Plug>Csurround", desc = "change surrounding #1 by #2" },
+            { "ds", "<Plug>Dsurround", desc = "delete surrounding #1" },
+            { "cS", "<Plug>CSurround", desc = "change surrounding #1 by #2 + new line" },
+            { "ys", "<Plug>Ysurround", desc = "wraps #1 in #2 (surround)" },
+            { "yS", "<Plug>YSurround", desc = "wraps #1 in #2 (surround) + new line" },
+            { "yss", "<Plug>Yssurround", desc = "wraps line in #1 (surround)" },
+            { "ySs", "<Plug>YSsurround", desc = "wraps line in #1 (surround) + new line" },
+            { "ySS", "<Plug>YSsurround", desc = "wraps line in #1 (surround) + new line" },
+            { "gs", "<Plug>VSurround", desc = "wraps visual selection in #1 (surround)", mode = "x" },
+            { "gS", "<Plug>VgSurround", desc = "wraps visual selection in #1 (surround) + new line", mode = "x" },
+        },
     init = function()
             vim.g.surround_no_mappings = 1
         end
@@ -555,6 +553,10 @@ require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim',  'html', 'javascript', 'css', 'html', 'scss' },
 
+  context_commentstring = {
+    enable = true,
+  },
+
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
 
@@ -615,7 +617,7 @@ require('nvim-treesitter.configs').setup {
   },
   autotag = {
     enable = true,
-  }
+  },
 }
 
 -- Diagnostic keymaps

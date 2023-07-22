@@ -223,7 +223,31 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
-  {'ThePrimeagen/harpoon'},
+  {'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+    },
+    init = function() vim.g.barbar_auto_setup = false end,
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      -- animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+
+      -- Set the filetypes which barbar will offset itself for
+      sidebar_filetypes = {
+        -- Use the default values: {event = 'BufWinLeave', text = nil}
+        -- NvimTree = true,
+        -- Or, specify the text used for the offset:
+        undotree = {text = 'undotree'},
+        -- Or, specify the event which the sidebar executes when leaving:
+        -- ['neo-tree'] = {event = 'BufWipeout'},
+        -- Or, specify both
+        Outline = {event = 'BufWinLeave', text = 'symbols-outline'},
+      },
+    },
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
+  },
   -- emmet
   'mattn/emmet-vim',
   {
@@ -392,8 +416,16 @@ require('lazy').setup({
     vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
     vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
   end},
-  --transparent
+  -- transparent
   {'xiyaowong/transparent.nvim'},
+  --persistance
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    },
+  },
 
   { import = 'custom.plugins' },
 }, {})
@@ -600,8 +632,8 @@ require('nvim-treesitter.configs').setup {
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+vim.keymap.set('n', '<leader>qe', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>qq', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -780,6 +812,59 @@ require('onedark').setup {
 }
 
 require('onedark').load()
+require'barbar'.setup {
+  auto_hide = false,
+  sidebar_filetypes = {
+    -- Use the default values: {event = 'BufWinLeave', text = nil}
+    NvimTree = true,
+    -- Or, specify the text used for the offset:
+    undotree = {text = 'undotree'},
+    -- Or, specify the event which the sidebar executes when leaving:
+    --['neo-tree'] = {event = 'BufWipeout'},
+    -- Or, specify both
+    -- Outline = {event = 'BufWinLeave', text = 'symbols-outline'},
+  },
+
+}
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+-- Move to previous/next
+map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
+map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+-- Re-order to previous/next
+map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
+map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+-- Goto buffer in position...
+map('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
+map('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', opts)
+map('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', opts)
+map('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', opts)
+map('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', opts)
+map('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', opts)
+map('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
+map('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
+map('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
+map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
+-- Pin/unpin buffer
+map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
+-- Close buffer
+map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
+-- Wipeout buffer
+--                 :BufferWipeout
+-- Close commands
+--                 :BufferCloseAllButCurrent
+--                 :BufferCloseAllButPinned
+--                 :BufferCloseAllButCurrentOrPinned
+--                 :BufferCloseBuffersLeft
+--                 :BufferCloseBuffersRight
+-- Magic buffer-picking mode
+map('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
+-- Sort automatically by...
+map('n', '<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
+map('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
+map('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
+map('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
 
 --ThePrimeagen keymaps
 vim.g.mapleader = " "
@@ -801,7 +886,7 @@ vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
-vim.keymap.set("n", "<leader>q", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],{ desc = 'Change all word' } )
+vim.keymap.set("n", "<C-d>", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],{ desc = 'Change all word' } )
 
 -- my custom keymaps
 vim.keymap.set("n", "<leader>o", "o<Esc>")
@@ -1056,15 +1141,16 @@ vim.cmd([[hi FloatBorder guibg=NONE]])
 require('Comment').setup {
   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 }
+  require( 'persistence' ).setup {
+  dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"),
+  options = {"buffers", "curdir", "tabpages", "winsize", 'globals'},
+  pre_save = function() vim.api.nvim_exec_autocmds('User', {pattern = 'SessionSavePre'}) end,
+}
+-- restore the session for the current directory
+vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {})
 
--- harpoon setup
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
+-- restore the last session
+vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {})
 
-vim.keymap.set("n", "<C-a>", mark.add_file)
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-
-vim.keymap.set("n", "<C-h>", function() ui.nav_file(1) end)
-vim.keymap.set("n", "<C-t>", function() ui.nav_file(2) end)
-vim.keymap.set("n", "<C-n>", function() ui.nav_file(3) end)
-vim.keymap.set("n", "<C-s>", function() ui.nav_file(4) end)
+-- stop Persistence => session won't be saved on exit
+vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], {})

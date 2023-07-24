@@ -405,7 +405,7 @@ require('lazy').setup({
   -- lightspeed search
   {'ggandor/lightspeed.nvim'},
   -- css color
-  {'ap/vim-css-color'},
+  {'norcalli/nvim-colorizer.lua'},
   {'ziontee113/color-picker.nvim'},
   --codeium AI
   {  'Exafunction/codeium.vim',
@@ -886,7 +886,7 @@ vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
-vim.keymap.set("n", "<C-d>", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],{ desc = 'Change all word' } )
+vim.keymap.set("n", "<leader>qc>", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],{ desc = 'Change all word' } )
 
 -- my custom keymaps
 vim.keymap.set("n", "<leader>o", "o<Esc>")
@@ -1115,6 +1115,13 @@ vim.cmd[[hi nvimtreenormal guibg=none ctermbg=none]]
 vim.keymap.set("n", "<C-q>", "<cmd>PickColor<cr>", opts)
 vim.keymap.set("i", "<C-q>", "<cmd>PickColorInsert<cr>", opts)
 
+require 'colorizer'.setup {
+  'css';
+  'javascript';
+  html = {
+    mode = 'foreground';
+  }
+}
 -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandRGB<cr>", opts)
 -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandHSL<cr>", opts)
 
@@ -1154,3 +1161,4 @@ vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").loa
 
 -- stop Persistence => session won't be saved on exit
 vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], {})
+

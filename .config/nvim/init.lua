@@ -405,7 +405,7 @@ require('lazy').setup({
   -- lightspeed search
   {'ggandor/lightspeed.nvim'},
   -- css color
-  {'norcalli/nvim-colorizer.lua'},
+  {'NvChad/nvim-colorizer.lua'},
   {'ziontee113/color-picker.nvim'},
   --codeium AI
   {  'Exafunction/codeium.vim',
@@ -1118,10 +1118,37 @@ vim.keymap.set("n", "<C-q>", "<cmd>PickColor<cr>", opts)
 vim.keymap.set("i", "<C-q>", "<cmd>PickColorInsert<cr>", opts)
 
 require('colorizer').setup({
-  'css';
-  'javascript';
-  html = { mode = 'background' };
-}, { mode = 'foreground' })
+  filetypes = {
+    'css',
+    'javascript',
+    'html'
+  },
+  user_default_options = {
+    RGB = true, -- #RGB hex codes
+    RRGGBB = true, -- #RRGGBB hex codes
+    names = true, -- "Name" codes like Blue or blue
+    RRGGBBAA = false, -- #RRGGBBAA hex codes
+    AARRGGBB = false, -- 0xAARRGGBB hex codes
+    rgb_fn = true, -- CSS rgb() and rgba() functions
+    rgba_fn = true, -- CSS rgb() and rgba() functions
+    hsl_fn = false, -- CSS hsl() and hsla() functions
+    css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+    css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+    -- Available modes for `mode`: foreground, background,  virtualtext
+    mode = "background", -- Set the display mode.
+    -- Available methods are false / true / "normal" / "lsp" / "both"
+    -- True is same as normal
+    tailwind = true, -- Enable tailwind colors
+    -- parsers can contain values used in |user_default_options|
+    sass = { enable = true, parsers = { "css" }, }, -- Enable sass colors
+    virtualtext = "■",
+    -- update color values even if buffer is not focused
+    -- example use: cmp_menu, cmp_docs
+    always_update = true
+  },
+  -- all the sub-options of filetypes apply to buftypes
+  buftypes = {}
+})
 
 -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandRGB<cr>", opts)
 -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandHSL<cr>", opts)
@@ -1162,4 +1189,3 @@ vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").loa
 
 -- stop Persistence => session won't be saved on exit
 vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], {})
-

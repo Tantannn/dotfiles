@@ -387,7 +387,7 @@ require('lazy').setup({
   {'MunifTanjim/prettier.nvim',
     cli_options = {
       -- https://prettier.io/docs/en/cli.html# --config-precedence
-      config_precedence = "prefer-file", -- or "cli-override" or "file-override"
+      single_quote = true,
     },
   },
   -- barbecue
@@ -884,8 +884,8 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set("i", "<C-c>", "<Esc>")
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+-- vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+-- vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "<leader>qc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],{ desc = 'Change all word' } )

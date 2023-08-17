@@ -45,7 +45,6 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
-
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -470,13 +469,14 @@ require('lazy').setup({
           ["s"] = actions.toggle_preview(),   -- Show preview of current node
 
           ["<C-v>"] = actions.vsplit(),       -- Open selected node in a vertical split
-          ["<C-s>"] = actions.hsplit(),  
+          ["<C-s>"] = actions.hsplit(),
 
         },
         lsp = {auto_attach = true}
       })
     end
   },
+  {'svban/YankAssassin.vim'},
   { import = 'custom.plugins' },
 }, {})
 
@@ -549,6 +549,8 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+vim.opt.splitright = true       -- Vertical split to the right
+vim.opt.splitbelow = true
 
 -- [[ Basic Keymaps ]]
 
@@ -941,6 +943,12 @@ vim.keymap.set("n", "<leader>qc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 -- my custom keymaps
 vim.keymap.set("n", "<leader>o", "o<Esc>")
 vim.keymap.set("n", "<leader>O", "O<Esc>")
+vim.keymap.set("n", "<cr>", "ciw", {desc = 'Delete a word'})
+-- vim.keymap.set("i", "<C-BS>", "<Esc>cvb",{desc = 'Delete a word'})
+vim.keymap.set("n", "Y", "y$")
+-- Use <Tab> to cycle through buffers in tab
+vim.keymap.set('n', '<Tab>', '<C-W>w');
+vim.keymap.set('n', '<S-Tab>', '<C-W>W');
 
 --nvim tree
 require("nvim-tree").setup({

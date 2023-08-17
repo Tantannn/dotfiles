@@ -477,6 +477,7 @@ require('lazy').setup({
     end
   },
   {'svban/YankAssassin.vim'},
+
   { import = 'custom.plugins' },
 }, {})
 
@@ -943,12 +944,13 @@ vim.keymap.set("n", "<leader>qc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 -- my custom keymaps
 vim.keymap.set("n", "<leader>o", "o<Esc>")
 vim.keymap.set("n", "<leader>O", "O<Esc>")
-vim.keymap.set("n", "<cr>", "ciw", {desc = 'Delete a word'})
+vim.keymap.set("n", "<BS>", "ciw", {desc = 'Delete a word'})
 -- vim.keymap.set("i", "<C-BS>", "<Esc>cvb",{desc = 'Delete a word'})
 vim.keymap.set("n", "Y", "y$")
 -- Use <Tab> to cycle through buffers in tab
 vim.keymap.set('n', '<Tab>', '<C-W>w');
 vim.keymap.set('n', '<S-Tab>', '<C-W>W');
+vim.keymap.set("n", "<C-n>", "*Ncgn", { silent = true, desc = "Substitute word under cursor" })
 
 --nvim tree
 require("nvim-tree").setup({

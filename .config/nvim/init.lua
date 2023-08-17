@@ -76,7 +76,7 @@ require('lazy').setup({
   prefer_startup_root = false,
 
   -- Detect tabstop and shiftwidth automatically
- 'tpope/vim-sleuth',
+  'tpope/vim-sleuth',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -343,21 +343,21 @@ require('lazy').setup({
   --vim surround 
   {
     "tpope/vim-surround",
-        keys = {
-            { "cs", "<Plug>Csurround", desc = "change surrounding #1 by #2" },
-            { "ds", "<Plug>Dsurround", desc = "delete surrounding #1" },
-            { "cS", "<Plug>CSurround", desc = "change surrounding #1 by #2 + new line" },
-            { "ys", "<Plug>Ysurround", desc = "wraps #1 in #2 (surround)" },
-            { "yS", "<Plug>YSurround", desc = "wraps #1 in #2 (surround) + new line" },
-            { "yss", "<Plug>Yssurround", desc = "wraps line in #1 (surround)" },
-            { "ySs", "<Plug>YSsurround", desc = "wraps line in #1 (surround) + new line" },
-            { "ySS", "<Plug>YSsurround", desc = "wraps line in #1 (surround) + new line" },
-            { "gs", "<Plug>VSurround", desc = "wraps visual selection in #1 (surround)", mode = "x" },
-            { "gS", "<Plug>VgSurround", desc = "wraps visual selection in #1 (surround) + new line", mode = "x" },
-        },
+    keys = {
+      { "cs", "<Plug>Csurround", desc = "change surrounding #1 by #2" },
+      { "ds", "<Plug>Dsurround", desc = "delete surrounding #1" },
+      { "cS", "<Plug>CSurround", desc = "change surrounding #1 by #2 + new line" },
+      { "ys", "<Plug>Ysurround", desc = "wraps #1 in #2 (surround)" },
+      { "yS", "<Plug>YSurround", desc = "wraps #1 in #2 (surround) + new line" },
+      { "yss", "<Plug>Yssurround", desc = "wraps line in #1 (surround)" },
+      { "ySs", "<Plug>YSsurround", desc = "wraps line in #1 (surround) + new line" },
+      { "ySS", "<Plug>YSsurround", desc = "wraps line in #1 (surround) + new line" },
+      { "gs", "<Plug>VSurround", desc = "wraps visual selection in #1 (surround)", mode = "x" },
+      { "gS", "<Plug>VgSurround", desc = "wraps visual selection in #1 (surround) + new line", mode = "x" },
+    },
     init = function()
-            vim.g.surround_no_mappings = 1
-        end
+      vim.g.surround_no_mappings = 1
+    end
   },
   --vim repeat
   {'tpope/vim-repeat'},
@@ -380,8 +380,8 @@ require('lazy').setup({
     opts = {
       theme = {
 
-    normal = { fg = "#c0caf5", bold = true },
-    separator = { fg = "#737aa2", bold = true },
+        normal = { fg = "#c0caf5", bold = true },
+        separator = { fg = "#737aa2", bold = true },
       }
     },
   },
@@ -392,13 +392,13 @@ require('lazy').setup({
   {'ziontee113/color-picker.nvim'},
   --codeium AI
   {  'Exafunction/codeium.vim',
-  config = function ()
-    -- Change '<C-g>' here to any keycode you like.
-    vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-    vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-    vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-    vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
-  end},
+    config = function ()
+      -- Change '<C-g>' here to any keycode you like.
+      vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+      vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+      vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+      vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+    end},
   -- transparent
   {'xiyaowong/transparent.nvim'},
   --persistance
@@ -411,7 +411,72 @@ require('lazy').setup({
   },
   --terminal
   -- {'akinsho/toggleterm.nvim'},
+  -- nav
+  {
+    "SmiteshP/nvim-navbuddy",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "SmiteshP/nvim-navic",
+      "MunifTanjim/nui.nvim"
+    },
+    keys = {
+      {"<leader>dn", "<cmd>Navbuddy<cr>", desc = "[D]ocument [N]avigation"},
+    },
+    config = function ()
+      local actions = require("nvim-navbuddy.actions")
+      local navbuddy = require("nvim-navbuddy")
+      navbuddy.setup({
+        window = {
+          border = "double"
+        },
+        mappings = {
+          ["<esc>"] = actions.close(),        -- Close and cursor to original location
+          ["q"] = actions.close(),
 
+          ["j"] = actions.next_sibling(),     -- down
+          ["k"] = actions.previous_sibling(), -- up
+
+          ["h"] = actions.parent(),           -- Move to left panel
+          ["l"] = actions.children(),         -- Move to right panel
+          ["0"] = actions.root(),             -- Move to first panel
+
+          ["v"] = actions.visual_name(),      -- Visual selection of name
+          ["V"] = actions.visual_scope(),     -- Visual selection of scope
+
+          ["y"] = actions.yank_name(),        -- Yank the name to system clipboard "+
+          ["Y"] = actions.yank_scope(),       -- Yank the scope to system clipboard "+
+
+          ["i"] = actions.insert_name(),      -- Insert at start of name
+          ["I"] = actions.insert_scope(),     -- Insert at start of scope
+
+          ["a"] = actions.append_name(),      -- Insert at end of name
+          ["A"] = actions.append_scope(),     -- Insert at end of scope
+
+          ["r"] = actions.rename(),           -- Rename currently focused symbol
+
+          ["d"] = actions.delete(),           -- Delete scope
+
+          ["f"] = actions.fold_create(),      -- Create fold of current scope
+          ["F"] = actions.fold_delete(),      -- Delete fold of current scope
+
+          ["c"] = actions.comment(),          -- Comment out current scope
+
+          ["<enter>"] = actions.select(),     -- Goto selected symbol
+          ["o"] = actions.select(),
+
+          ["J"] = actions.move_down(),        -- Move focused node down
+          ["K"] = actions.move_up(),          -- Move focused node up
+
+          ["s"] = actions.toggle_preview(),   -- Show preview of current node
+
+          ["<C-v>"] = actions.vsplit(),       -- Open selected node in a vertical split
+          ["<C-s>"] = actions.hsplit(),  
+
+        },
+        lsp = {auto_attach = true}
+      })
+    end
+  },
   { import = 'custom.plugins' },
 }, {})
 
@@ -1159,7 +1224,7 @@ vim.cmd([[hi FloatBorder guibg=NONE]])
 require('Comment').setup {
   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 }
-  require( 'persistence' ).setup {
+require( 'persistence' ).setup {
   dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"),
   options = {"buffers", "curdir", "tabpages", "winsize", 'globals'},
   pre_save = function() vim.api.nvim_exec_autocmds('User', {pattern = 'SessionSavePre'}) end,

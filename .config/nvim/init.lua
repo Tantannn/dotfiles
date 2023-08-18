@@ -128,6 +128,7 @@ require('lazy').setup({
         delete = { text = '_' },
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
+        untracked = { text = "│" },
       },
       on_attach = function(bufnr)
         vim.keymap.set('n', '[c', require('gitsigns').prev_hunk, { buffer = bufnr, desc = 'Go to Previous Hunk' })
@@ -500,7 +501,7 @@ vim.o.mouse = 'a'
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
--- vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -935,8 +936,8 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set("i", "<C-c>", "<Esc>")
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+-- vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+-- vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "<leader>qc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],{ desc = 'Change all word' } )
@@ -948,25 +949,106 @@ vim.keymap.set("n", "<BS>", "ciw", {desc = 'Delete a word'})
 vim.keymap.set("i", "<C-BS>", "<Esc>cvb",{desc = 'Delete a word'})
 vim.keymap.set("i", "<C-H>", "<Esc>cvb",{desc = 'Delete a word'})
 vim.keymap.set("n", "Y", "y$")
+vim.keymap.set("i", "<C-b>", "<Esc>^i", {desc= "Beginning of line" })
+vim.keymap.set("i", "<C-e>", "<End>", {desc= "End of line" })
+-- navigate within insert mode
+vim.keymap.set("i", "<C-h>", "<Left>", {desc= "Move left" })
+vim.keymap.set("i", "<C-l>", "<Right>", {desc= "Move right" })
+vim.keymap.set("i", "<C-j>", "<Down>", {desc= "Move down" })
+vim.keymap.set("i", "<C-k>", "<Up>", {desc= "Move up" })
+
 -- Use <Tab> to cycle through buffers in tab
 vim.keymap.set('n', '<Tab>', '<C-W>w');
 vim.keymap.set('n', '<S-Tab>', '<C-W>W');
 vim.keymap.set("n", "<C-n>", "*Ncgn", { silent = true, desc = "Substitute word under cursor" })
 
+-- Resize with arrows
+vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', {desc = "Resize window up"});
+vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', {desc = "Resize window down"});
+vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', {desc = "Resize window left"});
+vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', {desc = "Resize window right"});
+
+--[[ normal_mode = {
+    -- Better window movement
+    ["<C-h>"] = "<C-w>h",
+    ["<C-j>"] = "<C-w>j",
+    ["<C-k>"] = "<C-w>k",
+    ["<C-l>"] = "<C-w>l", ]]
+
 --nvim tree
 require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  view = {
-    width = 30,
+  filters = {
+    dotfiles = false,
+    exclude = { vim.fn.stdpath "config" .. "/lua/custom" },
   },
-  renderer = {
-    group_empty = true,
-    indent_markers = {
-      enable = true,
+  disable_netrw = true,
+  hijack_netrw = true,
+  hijack_cursor = true,
+  hijack_unnamed_buffer_when_opening = false,
+  sync_root_with_cwd = true,
+  update_focused_file = {
+    enable = true,
+    update_root = false,
+  },
+  view = {
+    adaptive_size = false,
+    side = "left",
+    width = 30,
+    preserve_window_proportions = true,
+  },
+  git = {
+    enable = false,
+    ignore = true,
+  },
+  filesystem_watchers = {
+    enable = true,
+  },
+  actions = {
+    open_file = {
+      resize_window = true,
     },
   },
-  filters = {
-    dotfiles = true,
+  renderer = {
+    root_folder_label = false,
+    highlight_git = false,
+    highlight_opened_files = "none",
+
+    indent_markers = {
+      enable = false,
+    },
+
+    icons = {
+      show = {
+        file = true,
+        folder = true,
+        folder_arrow = true,
+        git = false,
+      },
+
+      glyphs = {
+        default = "󰈚",
+        symlink = "",
+        folder = {
+          default = "",
+          empty = "",
+          empty_open = "",
+          open = "",
+          symlink = "",
+          symlink_open = "",
+          arrow_open = "",
+          arrow_closed = "",
+        },
+        git = {
+          unstaged = "✗",
+          staged = "✓",
+          unmerged = "",
+          renamed = "➜",
+          untracked = "★",
+          deleted = "",
+          ignored = "◌",
+        },
+      },
+    },
   },
 
 })
@@ -1295,7 +1377,9 @@ local config = {
       -- right section. Both are highlighted by c theme .  So we
       -- are just setting default looks o statusline
       normal = { c = { fg = colors.fg, bg = colors.bg } },
-      inactive = { c = { fg = colors.fg, bg = colors.bg } },
+      inactive = { c = { fg = colors.fg, bg = colors.bg } }, 
+      component_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
     },
   },
   sections = {
@@ -1446,3 +1530,6 @@ ins_right {
 
 -- Now don't forget to initialize lualine
 lualine.setup(config)
+
+
+-- telescope picker/ resume

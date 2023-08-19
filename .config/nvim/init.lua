@@ -478,6 +478,8 @@ require('lazy').setup({
     end
   },
   {'svban/YankAssassin.vim'},
+  -- --beter esc
+  {'max397574/better-escape.nvim'},
 
   { import = 'custom.plugins' },
 }, {})
@@ -934,7 +936,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
-vim.keymap.set("i", "<C-c>", "<Esc>")
+-- vim.keymap.set("i", "<C-c>", "<Esc>")
 -- next greatest remap ever : asbjornHaland
 -- vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 -- vim.keymap.set("n", "<leader>Y", [["+Y]])
@@ -951,11 +953,13 @@ vim.keymap.set("i", "<C-H>", "<Esc>cvb",{desc = 'Delete a word'})
 vim.keymap.set("n", "Y", "y$")
 vim.keymap.set("i", "<C-b>", "<Esc>^i", {desc= "Beginning of line" })
 vim.keymap.set("i", "<C-e>", "<End>", {desc= "End of line" })
+
 -- navigate within insert mode
 vim.keymap.set("i", "<C-h>", "<Left>", {desc= "Move left" })
 vim.keymap.set("i", "<C-l>", "<Right>", {desc= "Move right" })
 vim.keymap.set("i", "<C-j>", "<Down>", {desc= "Move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", {desc= "Move up" })
+vim.keymap.set("i", "jk", [[<C-\><C-n>]], {desc= "Escape" })
 
 -- Use <Tab> to cycle through buffers in tab
 vim.keymap.set('n', '<Tab>', '<C-W>w');
@@ -1530,6 +1534,5 @@ ins_right {
 
 -- Now don't forget to initialize lualine
 lualine.setup(config)
-
 
 -- telescope picker/ resume

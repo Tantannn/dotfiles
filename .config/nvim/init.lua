@@ -37,6 +37,7 @@ I hope you enjoy your Neovim journey,
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+--  Map your Ctrl to Caplock
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -478,9 +479,18 @@ require('lazy').setup({
     end
   },
   {'svban/YankAssassin.vim'},
-  -- --beter esc
-  {'max397574/better-escape.nvim'},
-
+ --beter esc
+{
+  "max397574/better-escape.nvim",
+  config = function()
+    require("better_escape").setup({
+   mapping = {"jk", "kj"}, -- a table with mappings to use
+    timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+    clear_empty_lines = false, -- clear line after escaping if there is only whitespace
+    keys = "<Esc>", -- keys used for escaping, if it is a funct
+      })
+  end,
+},
   { import = 'custom.plugins' },
 }, {})
 
@@ -941,7 +951,6 @@ vim.keymap.set("x", "<leader>p", [["_dP]])
 -- vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 -- vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
-
 vim.keymap.set("n", "<leader>qc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],{ desc = 'Change all word' } )
 
 -- my custom keymaps
@@ -959,7 +968,7 @@ vim.keymap.set("i", "<C-h>", "<Left>", {desc= "Move left" })
 vim.keymap.set("i", "<C-l>", "<Right>", {desc= "Move right" })
 vim.keymap.set("i", "<C-j>", "<Down>", {desc= "Move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", {desc= "Move up" })
-vim.keymap.set("i", "jk", [[<C-\><C-n>]], {desc= "Escape" })
+-- vim.keymap.set("i", "jk", [[<C-\><C-n>]], {desc= "Escape" })
 
 -- Use <Tab> to cycle through buffers in tab
 vim.keymap.set('n', '<Tab>', '<C-W>w');

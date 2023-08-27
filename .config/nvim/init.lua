@@ -279,8 +279,6 @@ require('lazy').setup({
   -- auto close tag
   {'windwp/nvim-ts-autotag'},
   {'windwp/nvim-autopairs'},
-  -- line connect 
-  {"lukas-reineke/indent-blankline.nvim" },
   --trouble shooting
   {
     "folke/trouble.nvim",
@@ -363,12 +361,7 @@ require('lazy').setup({
   --vim repeat
   {'tpope/vim-repeat'},
   --prettier
-  {'MunifTanjim/prettier.nvim',
-    cli_options = {
-      -- https://prettier.io/docs/en/cli.html# --config-precedence
-      single_quote = true,
-    },
-  },
+  {'MunifTanjim/prettier.nvim'},
   -- barbecue
   {
     "utilyre/barbecue.nvim",
@@ -479,18 +472,21 @@ require('lazy').setup({
     end
   },
   {'svban/YankAssassin.vim'},
- --beter esc
-{
-  "max397574/better-escape.nvim",
-  config = function()
-    require("better_escape").setup({
-   mapping = {"jk", "kj"}, -- a table with mappings to use
-    timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
-    clear_empty_lines = false, -- clear line after escaping if there is only whitespace
-    keys = "<Esc>", -- keys used for escaping, if it is a funct
+  --beter esc
+  {
+    "max397574/better-escape.nvim",
+    config = function()
+      require("better_escape").setup({
+        mapping = {"jk", "kj"}, -- a table with mappings to use
+        timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+        clear_empty_lines = false, -- clear line after escaping if there is only whitespace
+        keys = "<Esc>", -- keys used for escaping, if it is a funct
       })
-  end,
-},
+    end,
+  },
+  --tab-stop
+  {'tpope/vim-sleuth'},
+  
   { import = 'custom.plugins' },
 }, {})
 
@@ -1074,6 +1070,30 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = 'ToggleUndoTre
 
 -- prettier keymap
 vim.keymap.set("n", "<leader>f", vim.cmd.Prettier, { desc = 'Prettier format'})
+
+local prettier = require("prettier")
+
+prettier.setup({
+  bin = 'prettier', -- or `'prettierd'` (v0.23.3+)
+  filetypes = {
+    "css",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "less",
+    "markdown",
+    "scss",
+    "typescript",
+    "typescriptreact",
+    "yaml",
+  },
+  cli_options = {
+    single_quote = false,
+    tab_width = 2,
+  }
+})
 --auto pair 
 require('nvim-autopairs').setup({
   disable_filetype = { "TelescopePrompt" , "vim" },

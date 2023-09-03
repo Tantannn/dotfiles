@@ -12,7 +12,7 @@ Kickstart.nvim is a template for your own configuration.
 
   Once you've done that, you should start exploring, configuring and tinkering to
   explore Neovim!
-
+{}
   If you don't know anything about Lua, I recommend taking some time to read through
   a guide. One possible example:
   - https://learnxinyminutes.com/docs/lua/
@@ -486,6 +486,8 @@ require('lazy').setup({
   },
   --tab-stop
   {'tpope/vim-sleuth'},
+  --switch true/false
+  {'andrewradev/switch.vim'},
   
   { import = 'custom.plugins' },
 }, {})
@@ -953,22 +955,26 @@ vim.keymap.set("n", "<leader>qc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 vim.keymap.set("n", "<leader>o", "o<Esc>")
 vim.keymap.set("n", "<leader>O", "O<Esc>")
 vim.keymap.set("n", "<BS>", "ciw", {desc = 'Delete a word'})
-vim.keymap.set("i", "<C-BS>", "<Esc>cvb",{desc = 'Delete a word'})
-vim.keymap.set("i", "<C-H>", "<Esc>cvb",{desc = 'Delete a word'})
+-- vim.keymap.set("i", "<C-BS>", "<Esc>cvb",{desc = 'Delete a word'})
+-- vim.keymap.set("i", "<C-H>", "<Esc>cvb",{desc = 'Delete a word'})
 vim.keymap.set("n", "Y", "y$")
 vim.keymap.set("i", "<C-b>", "<Esc>^i", {desc= "Beginning of line" })
 vim.keymap.set("i", "<C-e>", "<End>", {desc= "End of line" })
+vim.keymap.set("i", "<Tab>", "%", {desc= "Jump between brackets" })
 
 -- navigate within insert mode
 vim.keymap.set("i", "<C-h>", "<Left>", {desc= "Move left" })
 vim.keymap.set("i", "<C-l>", "<Right>", {desc= "Move right" })
 vim.keymap.set("i", "<C-j>", "<Down>", {desc= "Move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", {desc= "Move up" })
--- vim.keymap.set("i", "jk", [[<C-\><C-n>]], {desc= "Escape" })
 
 -- Use <Tab> to cycle through buffers in tab
-vim.keymap.set('n', '<Tab>', '<C-W>w');
-vim.keymap.set('n', '<S-Tab>', '<C-W>W');
+-- vim.keymap.set('n', '<Tab>', '<C-W>w');
+-- vim.keymap.set('n', '<S-Tab>', '<C-W>W');
+vim.keymap.set('n', '<C-j>', '<C-W>j', { desc = 'Go to down window' });
+vim.keymap.set('n', '<C-k>', '<C-W>k', { desc = 'Go to up window' });
+vim.keymap.set('n', '<C-h>', '<C-W>h', { desc = 'Go to left window' });
+vim.keymap.set('n', '<C-l>', '<C-W>l', { desc = 'Go to right window' });
 vim.keymap.set("n", "<C-n>", "*Ncgn", { silent = true, desc = "Substitute word under cursor" })
 
 -- Resize with arrows
@@ -1070,6 +1076,9 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = 'ToggleUndoTre
 
 -- prettier keymap
 vim.keymap.set("n", "<leader>f", vim.cmd.Prettier, { desc = 'Prettier format'})
+
+-- switch true/false keymap
+vim.keymap.set("n", "-", vim.cmd.Switch, { desc = 'Switch true/false'})
 
 local prettier = require("prettier")
 
@@ -1564,4 +1573,5 @@ ins_right {
 -- Now don't forget to initialize lualine
 lualine.setup(config)
 
+vim.g.switch_mapping = '-'
 -- telescope picker/ resume

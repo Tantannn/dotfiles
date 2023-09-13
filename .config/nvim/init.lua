@@ -337,6 +337,8 @@ require('lazy').setup({
   {'jose-elias-alvarez/null-ls.nvim'},
   {'MunifTanjim/eslint.nvim'},
 
+  --switch true/false
+  {'andrewradev/switch.vim'},
   --tailwindcss
   {'sublimelsp/LSP-tailwindcss'},
   --vim surround 
@@ -486,9 +488,19 @@ require('lazy').setup({
   },
   --tab-stop
   {'tpope/vim-sleuth'},
-  --switch true/false
-  {'andrewradev/switch.vim'},
-  
+  -- todo-comments.nvim
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+  -- better Mar
+  { 'chentoast/marks.nvim' },
+
   { import = 'custom.plugins' },
 }, {})
 
@@ -960,7 +972,7 @@ vim.keymap.set("n", "<BS>", "ciw", {desc = 'Delete a word'})
 vim.keymap.set("n", "Y", "y$")
 vim.keymap.set("i", "<C-b>", "<Esc>^i", {desc= "Beginning of line" })
 vim.keymap.set("i", "<C-e>", "<End>", {desc= "End of line" })
-vim.keymap.set("i", "<Tab>", "%", {desc= "Jump between brackets" })
+-- vim.keymap.set("n", "<Tab>", "%", {desc= "Jump between brackets" })
 
 -- navigate within insert mode
 vim.keymap.set("i", "<C-h>", "<Left>", {desc= "Move left" })
@@ -969,12 +981,12 @@ vim.keymap.set("i", "<C-j>", "<Down>", {desc= "Move down" })
 vim.keymap.set("i", "<C-k>", "<Up>", {desc= "Move up" })
 
 -- Use <Tab> to cycle through buffers in tab
--- vim.keymap.set('n', '<Tab>', '<C-W>w');
--- vim.keymap.set('n', '<S-Tab>', '<C-W>W');
-vim.keymap.set('n', '<C-j>', '<C-W>j', { desc = 'Go to down window' });
-vim.keymap.set('n', '<C-k>', '<C-W>k', { desc = 'Go to up window' });
-vim.keymap.set('n', '<C-h>', '<C-W>h', { desc = 'Go to left window' });
-vim.keymap.set('n', '<C-l>', '<C-W>l', { desc = 'Go to right window' });
+vim.keymap.set('n', '<Tab>', '<C-W>w');
+vim.keymap.set('n', '<S-Tab>', '<C-W>W');
+-- vim.keymap.set('n', '<C-j>', '<C-W>j', { desc = 'Go to down window' });
+-- vim.keymap.set('n', '<C-k>', '<C-W>k', { desc = 'Go to up window' });
+-- vim.keymap.set('n', '<C-h>', '<C-W>h', { desc = 'Go to left window' });
+-- vim.keymap.set('n', '<C-l>', '<C-W>l', { desc = 'Go to right window' });
 vim.keymap.set("n", "<C-n>", "*Ncgn", { silent = true, desc = "Substitute word under cursor" })
 
 -- Resize with arrows
@@ -982,13 +994,6 @@ vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', {desc = "Resize window up"});
 vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', {desc = "Resize window down"});
 vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', {desc = "Resize window left"});
 vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', {desc = "Resize window right"});
-
---[[ normal_mode = {
-    -- Better window movement
-    ["<C-h>"] = "<C-w>h",
-    ["<C-j>"] = "<C-w>j",
-    ["<C-k>"] = "<C-w>k",
-    ["<C-l>"] = "<C-w>l", ]]
 
 --nvim tree
 require("nvim-tree").setup({
@@ -1077,9 +1082,6 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = 'ToggleUndoTre
 -- prettier keymap
 vim.keymap.set("n", "<leader>f", vim.cmd.Prettier, { desc = 'Prettier format'})
 
--- switch true/false keymap
-vim.keymap.set("n", "-", vim.cmd.Switch, { desc = 'Switch true/false'})
-
 local prettier = require("prettier")
 
 prettier.setup({
@@ -1100,13 +1102,17 @@ prettier.setup({
   },
   cli_options = {
     single_quote = false,
-    tab_width = 2,
+    tab_width = 4,
   }
 })
 --auto pair 
 require('nvim-autopairs').setup({
   disable_filetype = { "TelescopePrompt" , "vim" },
 })
+
+-- switch true/false keymap
+vim.g.switch_mapping = ''
+
 -- connect line
 vim.opt.list = true
 -- vim.opt.listchars:append "space:⋅"
@@ -1573,5 +1579,40 @@ ins_right {
 -- Now don't forget to initialize lualine
 lualine.setup(config)
 
-vim.g.switch_mapping = '-'
+--better Mark 
+require'marks'.setup {
+  -- whether to map keybinds or not. default true
+  default_mappings = true,
+  -- which builtin marks to show. default {}
+  builtin_marks = { ".", "<", ">", "^" },
+  -- whether movements cycle back to the beginning/end of buffer. default true
+  cyclic = true,
+  -- whether the shada file is updated after modifying uppercase marks. default false
+  force_write_shada = false,
+  -- how often (in ms) to redraw signs/recompute mark positions. 
+  -- higher values will have better performance but may cause visual lag, 
+  -- while lower values may cause performance penalties. default 150.
+  refresh_interval = 250,
+  -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
+  -- marks, and bookmarks.
+  -- can be either a table with all/none of the keys, or a single number, in which case
+  -- the priority applies to all marks.
+  -- default 10.
+  sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
+  -- disables mark tracking for specific filetypes. default {}
+  excluded_filetypes = {},
+  -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
+  -- sign/virttext. Bookmarks can be used to group together positions and quickly move
+  -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
+  -- default virt_text is "".
+  bookmark_0 = {
+    sign = "⚑",
+    virt_text = "hello world",
+    -- explicitly prompt for a virtual line annotation when setting a bookmark from this group.
+    -- defaults to false.
+    annotate = false,
+  },
+  mappings = {}
+}
+
 -- telescope picker/ resume

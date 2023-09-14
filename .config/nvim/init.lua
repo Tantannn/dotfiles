@@ -500,6 +500,8 @@ require('lazy').setup({
   },
   -- better Mar
   { 'chentoast/marks.nvim' },
+  -- toggle Terminal
+  {'akinsho/toggleterm.nvim', version = "*", config = true},
 
   { import = 'custom.plugins' },
 }, {})
@@ -994,6 +996,13 @@ vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', {desc = "Resize window up"});
 vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', {desc = "Resize window down"});
 vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', {desc = "Resize window left"});
 vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', {desc = "Resize window right"});
+
+-- Toggle Term 
+-- nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+-- inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+vim.keymap.set('n', '<C-t>', ':ToggleTerm<CR>', {desc = "Toggle Term"});
+vim.keymap.set('i', '<C-t>', ':ToggleTerm<CR>', {desc = "Toggle Term"});
+vim.keymap.set('t', '<C-t>', ':ToggleTerm<CR>', {desc = "Toggle Term"});
 
 --nvim tree
 require("nvim-tree").setup({

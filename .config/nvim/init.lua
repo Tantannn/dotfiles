@@ -38,6 +38,7 @@ I hope you enjoy your Neovim journey,
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 --  Map your Ctrl to Caplock
+vim.g.OmniSharp_server_stdio = 0
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -1082,7 +1083,7 @@ local servers = {
 
 local pid = vim.fn.getpid()
 -- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
-local omnisharp_bin = "/home/tantannn/.cache/omnisharp-vim/omnisharp-roslyn/run"
+local omnisharp_bin = "/home/tantan/.cache/omnisharp-vim/omnisharp-roslyn/run"
 -- on Windows
 -- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
 

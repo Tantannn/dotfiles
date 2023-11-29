@@ -38,7 +38,8 @@ I hope you enjoy your Neovim journey,
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 --  Map your Ctrl to Caplock
-vim.g.OmniSharp_server_stdio = 0
+-- vim.g.OmniSharp_server_stdio = 0
+-- vim.g.OmniSharp_server_use_mono = 1
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -140,15 +141,17 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-      -- vim.cmd.style 'warmer'
-    end,
-  },
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --     -- vim.cmd.style 'warmer'
+  --   end,
+  -- },
+
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
   {
     -- Set lualine as statusline
@@ -156,11 +159,10 @@ require('lazy').setup({
     -- See `:help lualine.txt`
   },
 
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
+  { 
+    "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {}
   },
-
+  
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',
     dependencies = {
@@ -389,6 +391,8 @@ require('lazy').setup({
   {'ziontee113/color-picker.nvim'},
   --codeium AI
   {  'Exafunction/codeium.vim',
+    event = 'BufEnter',
+
     config = function ()
       -- Change '<C-g>' here to any keycode you like.
       vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
@@ -503,307 +507,12 @@ require('lazy').setup({
   { 'chentoast/marks.nvim' },
   -- toggle Terminal
   {'akinsho/toggleterm.nvim', version = "*", config = true},
-  -- hardtime
-  {
-    "m4xshen/hardtime.nvim",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = {  max_time = 1000,
-      max_count = 2,
-      disable_mouse = true,
-      hint = true,
-      notification = true,
-      allow_different_key = false,
-      enabled = true,
-      resetting_keys = {
-        ["1"] = { "n", "x" },
-        ["2"] = { "n", "x" },
-        ["3"] = { "n", "x" },
-        ["4"] = { "n", "x" },
-        ["5"] = { "n", "x" },
-        ["6"] = { "n", "x" },
-        ["7"] = { "n", "x" },
-        ["8"] = { "n", "x" },
-        ["9"] = { "n", "x" },
-        ["c"] = { "n" },
-        ["C"] = { "n" },
-        ["d"] = { "n" },
-        ["x"] = { "n" },
-        ["X"] = { "n" },
-        ["y"] = { "n" },
-        ["Y"] = { "n" },
-        ["p"] = { "n" },
-        ["P"] = { "n" },
-      },
-      restriction_mode = "block", -- block or hint
-      restricted_keys = {
-        ["h"] = { "n", "x" },
-        ["j"] = { "n", "x" },
-        ["k"] = { "n", "x" },
-        ["l"] = { "n", "x" },
-        ["-"] = { "n", "x" },
-        ["+"] = { "n", "x" },
-        ["gj"] = { "n", "x" },
-        ["gk"] = { "n", "x" },
-        ["<CR>"] = { "n", "x" },
-        ["<C-M>"] = { "n", "x" },
-        ["<C-N>"] = { "n", "x" },
-        ["<C-P>"] = { "n", "x" },
-      },
-      disabled_keys = {
-        ["<Up>"] = { "", "i" },
-        ["<Down>"] = { "", "i" },
-        ["<Left>"] = { "", "i" },
-        ["<Right>"] = { "", "i" },
-      },
-      disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason" },
-      hints = {
-        ["[kj][%^_]"] = {
-          message = function(key)
-            return "Use "
-              .. (key:sub(1, 1) == "k" and "-" or "<CR> or +")
-              .. " instead of "
-              .. key
-          end,
-          length = 2,
-        },
-        ["%$a"] = {
-          message = function()
-            return "Use A instead of $a"
-          end,
-          length = 2,
-        },
-        ["%^i"] = {
-          message = function()
-            return "Use I instead of ^i"
-          end,
-          length = 2,
-        },
-        ["%D[k-]o"] = {
-          message = function(keys)
-            return "Use O instead of " .. keys:sub(2)
-          end,
-          length = 3,
-        },
-        ["%D[j+]O"] = {
-          message = function(keys)
-            return "Use o instead of " .. keys:sub(2)
-          end,
-          length = 3,
-        },
-        ["[^fFtT]li"] = {
-          message = function()
-            return "Use a instead of li"
-          end,
-          length = 3,
-        },
-        ["2([dcy=<>])%1"] = {
-          message = function(key)
-            return "Use " .. key:sub(3) .. "j instead of " .. key
-          end,
-          length = 3,
-        },
 
-        -- hints for f/F/t/T
-        ["[^dcy=]f.h"] = {
-          message = function(keys)
-            return "Use t" .. keys:sub(3, 3) .. " instead of " .. keys:sub(2)
-          end,
-          length = 4,
-        },
-        ["[^dcy=]F.l"] = {
-          message = function(keys)
-            return "Use T" .. keys:sub(3, 3) .. " instead of " .. keys:sub(2)
-          end,
-          length = 4,
-        },
-        ["[^dcy=]T.h"] = {
-          message = function(keys)
-            return "Use F" .. keys:sub(3, 3) .. " instead of " .. keys:sub(2)
-          end,
-          length = 4,
-        },
-        ["[^dcy=]t.l"] = {
-          message = function(keys)
-            return "Use f" .. keys:sub(3, 3) .. " instead of " .. keys:sub(2)
-          end,
-          length = 4,
-        },
+  -- {'OmniSharp/omnisharp-vim'},
+  -- {'Hoffs/omnisharp-extended-lsp.nvim'},
 
-        -- hints for delete + insert
-        ["d[bBwWeE%^%$]i"] = {
-          message = function(keys)
-            return "Use " .. "c" .. keys:sub(2, 2) .. " instead of " .. keys
-          end,
-          length = 3,
-        },
-        ["dg[eE]i"] = {
-          message = function(keys)
-            return "Use " .. "c" .. keys:sub(2, 3) .. " instead of " .. keys
-          end,
-          length = 4,
-        },
-        ["d[tTfF].i"] = {
-          message = function(keys)
-            return "Use " .. "c" .. keys:sub(2, 3) .. " instead of " .. keys
-          end,
-          length = 4,
-        },
-        ["d[ia][\"'`{}%[%]()<>bBwWspt]i"] = {
-          message = function(keys)
-            return "Use " .. "c" .. keys:sub(2, 3) .. " instead of " .. keys
-          end,
-          length = 4,
-        },
-
-        -- hints for unnecessary visual mode
-        ["Vgg[dcy=<>]"] = {
-          message = function(keys)
-            return "Use " .. keys:sub(4, 4) .. "gg instead of " .. keys
-          end,
-          length = 4,
-        },
-        ['Vgg".[dy]'] = {
-          message = function(keys)
-            return "Use " .. keys:sub(4, 6) .. "gg instead of " .. keys
-          end,
-          length = 6,
-        },
-        ["VG[dcy=<>]"] = {
-          message = function(keys)
-            return "Use " .. keys:sub(3, 3) .. "G instead of " .. keys
-          end,
-          length = 3,
-        },
-        ['VG".[dy]'] = {
-          message = function(keys)
-            return "Use " .. keys:sub(3, 5) .. "G instead of " .. keys
-          end,
-          length = 5,
-        },
-        ["V%d[kj][dcy=<>]"] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(4, 4)
-              .. keys:sub(2, 3)
-              .. " instead of "
-              .. keys
-          end,
-          length = 4,
-        },
-        ['V%d[kj]".[dy]'] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(4, 6)
-              .. keys:sub(2, 3)
-              .. " instead of "
-              .. keys
-          end,
-          length = 6,
-        },
-        ["V%d%d[kj][dcy=<>]"] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(5, 5)
-              .. keys:sub(2, 4)
-              .. " instead of "
-              .. keys
-          end,
-          length = 5,
-        },
-        ['V%d%d[kj]".[dy]'] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(5, 7)
-              .. keys:sub(2, 4)
-              .. " instead of "
-              .. keys
-          end,
-          length = 7,
-        },
-        ["[vV][bBwWeE%^%$][dcy=<>]"] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(3, 3)
-              .. keys:sub(2, 2)
-              .. " instead of "
-              .. keys
-          end,
-          length = 3,
-        },
-        ['[vV][bBwWeE%^%$]".[dy]'] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(3, 5)
-              .. keys:sub(2, 2)
-              .. " instead of "
-              .. keys
-          end,
-          length = 5,
-        },
-        ["[vV]g[eE][dcy=<>]"] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(4, 4)
-              .. keys:sub(2, 3)
-              .. " instead of "
-              .. keys
-          end,
-          length = 4,
-        },
-        ['[vV]g[eE]".[dy]'] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(4, 6)
-              .. keys:sub(2, 3)
-              .. " instead of "
-              .. keys
-          end,
-          length = 6,
-        },
-        ["[vV][tTfF].[dcy=<>]"] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(4, 4)
-              .. keys:sub(2, 3)
-              .. " instead of "
-              .. keys
-          end,
-          length = 4,
-        },
-        ['[vV][tTfF].".[dy]'] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(4, 6)
-              .. keys:sub(2, 3)
-              .. " instead of "
-              .. keys
-          end,
-          length = 6,
-        },
-        ["[vV][ia][\"'`{}%[%]()<>bBwWspt][dcy=<>]"] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(4, 4)
-              .. keys:sub(2, 3)
-              .. " instead of "
-              .. keys
-          end,
-          length = 4,
-        },
-        ['[vV][ia]["\'`{}%[%]()<>bBwWspt]".[dy]'] = {
-          message = function(keys)
-            return "Use "
-              .. keys:sub(4, 6)
-              .. keys:sub(2, 3)
-              .. " instead of "
-              .. keys
-          end,
-          length = 6,
-        },
-      },}
- },
-  {'OmniSharp/omnisharp-vim'},
-  {'Hoffs/omnisharp-extended-lsp.nvim'},
+    -- Swap
+  {'mizlan/iswap.nvim'},
 
   { import = 'custom.plugins' },
 }, {})
@@ -844,6 +553,8 @@ vim.o.smartcase = true
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number"
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -856,7 +567,8 @@ vim.opt.wrap = false
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+-- vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- change something here
+vim.opt.undodir = os.getenv('HOMEPATH') .. '/.nvim/undodir'
 vim.opt.undofile = true
 
 vim.opt.hlsearch = true
@@ -939,7 +651,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim',  'html', 'javascript', 'css', 'html', 'scss' },
+  ensure_installed = {  'c_sharp', 'lua', 'python', 'tsx', 'typescript', 'vimdoc', 'vim',  'html', 'javascript', 'css', 'html', 'scss', 'php' },
 
   context_commentstring = {
     enable = true,
@@ -1066,11 +778,11 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  clangd = {},
+  -- clangd = {},
   -- gopls = {},
   pyright = {},
   rust_analyzer = {},
-  omnisharp = {},
+  -- omnisharp = {},
   tsserver = {},
 
   lua_ls = {
@@ -1081,21 +793,21 @@ local servers = {
   },
 }
 
-local pid = vim.fn.getpid()
--- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
-local omnisharp_bin = "/home/tantan/.cache/omnisharp-vim/omnisharp-roslyn/run"
--- on Windows
--- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
+-- local pid = vim.fn.getpid()
+-- -- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
+-- local omnisharp_bin = "C:/Users/Admin/AppData/Local/omnisharp-vim/omnisharp-roslyn/OmniSharp.exe"
+-- -- on Windows
+-- -- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
 
-local config = {
-  handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').handler,
-  },
-  cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
-  -- rest of your settings
-}
+-- local config = {
+--   handlers = {
+--     ["textDocument/definition"] = require('omnisharp_extended').handler,
+--   },
+--   cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
+--   -- rest of your settings
+-- }
 
-require'lspconfig'.omnisharp.setup(config)
+-- require'lspconfig'.omnisharp.setup(config)
 
 -- Setup neovim lua configuration
 require('neodev').setup()
@@ -1202,11 +914,63 @@ cmp.setup.cmdline(':', {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
-require('onedark').setup {
-  style = 'darker'
-}
+-- require('onedark').setup {
+--   style = 'darker'
+-- }
 
-require('onedark').load()
+-- require('onedark').load()
+
+require("catppuccin").setup({
+  flavour = "mocha", -- latte, frappe, macchiato, mocha
+  background = { -- :h background
+      light = "latte",
+      dark = "mocha",
+  },
+  transparent_background = true, -- disables setting the background color.
+  show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+  term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+  dim_inactive = {
+      enabled = false, -- dims the background color of inactive window
+      shade = "dark",
+      percentage = 0.15, -- percentage of the shade to apply to the inactive window
+  },
+  no_italic = false, -- Force no italic
+  no_bold = false, -- Force no bold
+  no_underline = false, -- Force no underline
+  styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+      comments = { "italic" }, -- Change the style of comments
+      conditionals = { "italic" },
+      loops = { "italic" },
+      functions = {},
+      keywords = {},
+      strings = {},
+      variables = {},
+      numbers = {},
+      booleans = { "italic" },
+      properties = {},
+      types = { "italic" },
+      operators = {},
+  },
+  -- color_overrides = {},
+  -- custom_highlights = {},
+  integrations = {
+      cmp = true,
+      gitsigns = true,
+      nvimtree = true,
+      treesitter = true,
+      notify = false,
+      indent_blankline = true,
+      mini = {
+          enabled = true,
+          indentscope_color = "",
+      },
+      -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+  },
+})
+
+-- setup must be called before loading
+vim.cmd.colorscheme "catppuccin"
+
 require'barbar'.setup {
   auto_hide = false,
   sidebar_filetypes = {
@@ -1543,96 +1307,6 @@ eslint.setup({
 vim.cmd('hi nvimtreeendofbuffer guibg=none ctermbg=none')
 vim.cmd[[hi nvimtreenormal guibg=none ctermbg=none]]
 
---barbecue custom theme
--- require("barbecue").setup({
---   theme = {
---     -- this highlight is used to override other highlights
---     -- you can take advantage of its `bg` and set a background throughout your winbar
---     -- (e.g. basename will look like this: { fg = "#c0caf5", bold = true })
---     normal = { fg = "#c0caf5" }
---
---     -- these highlights correspond to symbols table from config
---     -- ellipsis = { fg = "#737aa2" },
---     -- separator = { fg = "#737aa2" },
---     -- modified = { fg = "#737aa2" },
---     --
---     -- these highlights represent the _text_ of three main parts of barbecue
---     -- dirname = { fg = "#737aa2" },
---     -- basename = { bold = true },
---     -- context = {},
---
---     -- these highlights are used for context/navic icons
---     -- context_file = { fg = "#ac8fe4" },
---     -- context_module = { fg = "#ac8fe4" },
---     -- context_namespace = { fg = "#ac8fe4" },
---     -- context_package = { fg = "#ac8fe4" },
---     -- context_class = { fg = "#ac8fe4" },
---     -- context_method = { fg = "#ac8fe4" },
---     -- context_property = { fg = "#ac8fe4" },
---     -- context_field = { fg = "#ac8fe4" },
---     -- context_constructor = { fg = "#ac8fe4" },
---     -- context_enum = { fg = "#ac8fe4" },
---     -- context_interface = { fg = "#ac8fe4" },
---     -- context_function = { fg = "#ac8fe4" },
---     -- context_variable = { fg = "#ac8fe4" },
---     -- context_constant = { fg = "#ac8fe4" },
---     -- context_string = { fg = "#ac8fe4" },
---     -- context_number = { fg = "#ac8fe4" },
---     -- context_boolean = { fg = "#ac8fe4" },
---     -- context_array = { fg = "#ac8fe4" },
---     -- context_object = { fg = "#ac8fe4" },
---     -- context_key = { fg = "#ac8fe4" },
---     -- context_null = { fg = "#ac8fe4" },
---     -- context_enum_member = { fg = "#ac8fe4" },
---     -- context_struct = { fg = "#ac8fe4" },
---     -- context_event = { fg = "#ac8fe4" },
---     -- context_operator = { fg = "#ac8fe4" },
---     -- context_type_parameter = { fg = "#ac8fe4" },
---     --
---   },
--- })
---
--- require("nvim-navic").setup({
---     icons = {
---         File          = "󰈙 ",
---         Module        = " ",
---         Namespace     = "󰌗 ",
---         Package       = " ",
---         Class         = "󰌗 ",
---         Method        = "󰆧 ",
---         Property      = " ",
---         Field         = " ",
---         Constructor   = " ",
---         Enum          = "󰕘",
---         Interface     = "󰕘",
---         Function      = "󰊕 ",
---         Variable      = "󰆧 ",
---         Constant      = "󰏿 ",
---         String        = "󰀬 ",
---         Number        = "󰎠 ",
---         Boolean       = "◩ ",
---         Array         = "󰅪 ",
---         Object        = "󰅩 ",
---         Key           = "󰌋 ",
---         Null          = "󰟢 ",
---         EnumMember    = " ",
---         Struct        = "󰌗 ",
---         Event         = " ",
---         Operator      = "󰆕 ",
---         TypeParameter = "󰊄 ",
---     },
---     -- lsp = {
---     --     auto_attach = false,
---     --     preference = nil,
---     -- },
---     highlight = false,
---     separator = " > ",
---     depth_limit = 0,
---     depth_limit_indicator = "..",
---     safe_output = true,
---     click = false
--- })
-
 -- css color 
 vim.keymap.set("n", "<C-q>", "<cmd>PickColor<cr>", opts)
 vim.keymap.set("i", "<C-q>", "<cmd>PickColorInsert<cr>", opts)
@@ -1945,5 +1619,59 @@ require'marks'.setup {
   },
   mappings = {}
 }
+
+-- switch
+vim.g.switch_custom_definitions = {
+  { '0', '1' }
+}
+
+--swap
+require('iswap').setup{
+  -- The keys that will be used as a selection, in order
+  -- ('asdfghjklqwertyuiopzxcvbnm' by default)
+  keys = 'qwertyuiop',
+
+  -- Grey out the rest of the text when making a selection
+  -- (enabled by default)
+  grey = 'disable',
+
+  -- Highlight group for the sniping value (asdf etc.)
+  -- default 'Search'
+  hl_snipe = 'ErrorMsg',
+
+  -- Highlight group for the visual selection of terms
+  -- default 'Visual'
+  hl_selection = 'WarningMsg',
+
+  -- Highlight group for the greyed background
+  -- default 'Comment'
+  hl_grey = 'LineNr',
+
+  -- Post-operation flashing highlight style,
+  -- either 'simultaneous' or 'sequential', or false to disable
+  -- default 'sequential'
+  flash_style = false,
+
+  -- Highlight group for flashing highlight afterward
+  -- default 'IncSearch'
+  hl_flash = 'ModeMsg',
+
+  -- Move cursor to the other element in ISwap*With commands
+  -- default false
+  move_cursor = true,
+
+  -- Automatically swap with only two arguments
+  -- default nil
+  autoswap = true,
+
+  -- Other default options you probably should not change:
+  debug = nil,
+  hl_grey_priority = '1000',
+}
+
+-- Highlight row number
+-- vim.api.nvim_set_hl(0, 'LineNrAbove', { fg='#4f4f4f'})
+vim.api.nvim_set_hl(0, 'CursorLineNr', { fg='#CC7722', bold=true })
+-- vim.api.nvim_set_hl(0, 'LineNrBelow', { fg='#4f4f4f'})
 
 -- telescope picker/ resume

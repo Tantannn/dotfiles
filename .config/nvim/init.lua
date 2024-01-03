@@ -40,6 +40,9 @@ I hope you enjoy your Neovim journey,
 --  Map your Ctrl to Caplock
 -- vim.g.OmniSharp_server_stdio = 0
 -- vim.g.OmniSharp_server_use_mono = 1
+vim.g.OmniSharp_highlighting = 0
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.xaml"}, command = "setf xml" })
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -141,17 +144,17 @@ require('lazy').setup({
     },
   },
 
-  -- {
-  --   -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'onedark'
-  --     -- vim.cmd.style 'warmer'
-  --   end,
-  -- },
+  {
+    -- Theme inspired by Atom
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'onedark'
+      -- vim.cmd.style 'warmer'
+    end,
+  },
 
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  -- { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
   {
     -- Set lualine as statusline
@@ -510,7 +513,7 @@ require('lazy').setup({
 
   -- {'OmniSharp/omnisharp-vim'},
   -- {'Hoffs/omnisharp-extended-lsp.nvim'},
-
+  {'OmniSharp/omnisharp-vim'},
     -- Swap
   {'mizlan/iswap.nvim'},
 
@@ -553,8 +556,6 @@ vim.o.smartcase = true
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
-vim.opt.cursorline = true
-vim.opt.cursorlineopt = "number"
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -782,7 +783,7 @@ local servers = {
   -- gopls = {},
   pyright = {},
   rust_analyzer = {},
-  -- omnisharp = {},
+  omnisharp = {},
   tsserver = {},
 
   lua_ls = {
@@ -792,13 +793,12 @@ local servers = {
     },
   },
 }
-
+-- vim.g.OmniSharp_server_path = '"C:\\Users\\Admi\\AppData\\Local\\nvim-data\\mason\\packages\\omnisharp\\libexec\\OmniSharp.exe"'
 -- local pid = vim.fn.getpid()
 -- -- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
 -- local omnisharp_bin = "C:/Users/Admin/AppData/Local/omnisharp-vim/omnisharp-roslyn/OmniSharp.exe"
 -- -- on Windows
 -- -- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
-
 -- local config = {
 --   handlers = {
 --     ["textDocument/definition"] = require('omnisharp_extended').handler,
@@ -914,62 +914,68 @@ cmp.setup.cmdline(':', {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
--- require('onedark').setup {
---   style = 'darker'
--- }
+require('onedark').setup {
+  style = 'darker'
+}
 
--- require('onedark').load()
+require('onedark').load()
 
-require("catppuccin").setup({
-  flavour = "mocha", -- latte, frappe, macchiato, mocha
-  background = { -- :h background
-      light = "latte",
-      dark = "mocha",
-  },
-  transparent_background = true, -- disables setting the background color.
-  show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-  term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-  dim_inactive = {
-      enabled = false, -- dims the background color of inactive window
-      shade = "dark",
-      percentage = 0.15, -- percentage of the shade to apply to the inactive window
-  },
-  no_italic = false, -- Force no italic
-  no_bold = false, -- Force no bold
-  no_underline = false, -- Force no underline
-  styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-      comments = { "italic" }, -- Change the style of comments
-      conditionals = { "italic" },
-      loops = { "italic" },
-      functions = {},
-      keywords = {},
-      strings = {},
-      variables = {},
-      numbers = {},
-      booleans = { "italic" },
-      properties = {},
-      types = { "italic" },
-      operators = {},
-  },
-  -- color_overrides = {},
-  -- custom_highlights = {},
-  integrations = {
-      cmp = true,
-      gitsigns = true,
-      nvimtree = true,
-      treesitter = true,
-      notify = false,
-      indent_blankline = true,
-      mini = {
-          enabled = true,
-          indentscope_color = "",
-      },
-      -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
-  },
-})
+-- require("catppuccin").setup({
+--   flavour = "mocha", -- latte, frappe, macchiato, mocha
+--   background = { -- :h background
+--       light = "latte",
+--       dark = "mocha",
+--   },
+--   transparent_background = false, -- disables setting the background color.
+--   show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+--   term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+--   dim_inactive = {
+--       enabled = false, -- dims the background color of inactive window
+--       shade = "dark",
+--       percentage = 0.15, -- percentage of the shade to apply to the inactive window
+--   },
+--   no_italic = false, -- Force no italic
+--   no_bold = false, -- Force no bold
+--   no_underline = false, -- Force no underline
+--   styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+--       comments = { "italic" }, -- Change the style of comments
+--       conditionals = { "italic" },
+--       loops = { "italic" },
+--       functions = {},
+--       keywords = {},
+--       strings = {},
+--       variables = {},
+--       numbers = {},
+--       booleans = { "italic" },
+--       properties = {},
+--       types = { "italic" },
+--       operators = {},
+--   },
+--   color_overrides = {},
+--   custom_highlights = {},
+--   integrations = {
+--       cmp = true,
+--       gitsigns = true,
+--       nvimtree = true,
+--       treesitter = true,
+--       notify = false,
+--       indent_blankline = true,
+--       mini = {
+--           enabled = true,
+--           indentscope_color = "",
+--       },
+--       -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+--   },
+-- })
 
 -- setup must be called before loading
-vim.cmd.colorscheme "catppuccin"
+-- vim.cmd.colorscheme "catppuccin"
+
+-- Highlight row number
+vim.api.nvim_set_hl(0, 'LineNrAbove', { fg='#4f4f4f'})
+vim.api.nvim_set_hl(0, 'LineNr', { fg='#CC7722', bold=true })
+vim.api.nvim_set_hl(0, 'LineNrBelow', { fg='#4f4f4f'})
+
 
 require'barbar'.setup {
   auto_hide = false,
@@ -1668,10 +1674,5 @@ require('iswap').setup{
   debug = nil,
   hl_grey_priority = '1000',
 }
-
--- Highlight row number
--- vim.api.nvim_set_hl(0, 'LineNrAbove', { fg='#4f4f4f'})
-vim.api.nvim_set_hl(0, 'CursorLineNr', { fg='#CC7722', bold=true })
--- vim.api.nvim_set_hl(0, 'LineNrBelow', { fg='#4f4f4f'})
 
 -- telescope picker/ resume
